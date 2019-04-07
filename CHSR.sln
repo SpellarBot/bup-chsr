@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHSR.Web", "CHSR.Web\CHSR.Web.csproj", "{B60A3572-ADFA-4F34-84BB-533D0F9852A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CHSR.Web", "CHSR.Web\CHSR.Web.csproj", "{B60A3572-ADFA-4F34-84BB-533D0F9852A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{AFDE4943-B106-4605-B7B8-A19C327F8829}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CHSR.Domain", "CHSR.Domain\CHSR.Domain.csproj", "{E38BCAAD-A897-4D4B-9808-4EFF14527757}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CHSR.Data", "CHSR.Data\CHSR.Data.csproj", "{A7CF3361-1725-4E05-9891-D86F190848E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{D5961D13-E36C-4DBD-B63F-A63513966CFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHSR.DataSeeder", "CHSR.DataSeeder\CHSR.DataSeeder.csproj", "{106F11DE-38F6-4DE1-B299-8B77F2503237}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +25,25 @@ Global
 		{B60A3572-ADFA-4F34-84BB-533D0F9852A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B60A3572-ADFA-4F34-84BB-533D0F9852A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B60A3572-ADFA-4F34-84BB-533D0F9852A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E38BCAAD-A897-4D4B-9808-4EFF14527757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E38BCAAD-A897-4D4B-9808-4EFF14527757}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E38BCAAD-A897-4D4B-9808-4EFF14527757}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E38BCAAD-A897-4D4B-9808-4EFF14527757}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7CF3361-1725-4E05-9891-D86F190848E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7CF3361-1725-4E05-9891-D86F190848E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7CF3361-1725-4E05-9891-D86F190848E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7CF3361-1725-4E05-9891-D86F190848E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{106F11DE-38F6-4DE1-B299-8B77F2503237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{106F11DE-38F6-4DE1-B299-8B77F2503237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{106F11DE-38F6-4DE1-B299-8B77F2503237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{106F11DE-38F6-4DE1-B299-8B77F2503237}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E38BCAAD-A897-4D4B-9808-4EFF14527757} = {AFDE4943-B106-4605-B7B8-A19C327F8829}
+		{106F11DE-38F6-4DE1-B299-8B77F2503237} = {D5961D13-E36C-4DBD-B63F-A63513966CFA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E5139C48-0090-441F-8AD9-E25218B57D06}

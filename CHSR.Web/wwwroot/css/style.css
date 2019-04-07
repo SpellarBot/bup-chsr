@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*!
  * CoreUI - Open Source Bootstrap Admin Template
  * @version v1.0.10
@@ -10362,18 +10362,19 @@ base-chart.chart {
   margin: 0;
   background-color: #fff;
   border-bottom: 1px solid #a4b7c1; }
-  .app-header.navbar .navbar-brand {
-    display: inline-block;
-    width: 155px;
-    height: 55px;
-    padding: 0.5rem 1rem;
-    margin-right: 0;
-    background-color: #fff;
-    background-image: url("../img/logo.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 70px auto;
-    border-bottom: 1px solid #a4b7c1; }
+    .app-header.navbar .navbar-brand {
+        display: inline-block;
+        width: 155px;
+        height: 55px;
+        padding: 0.5rem 1rem;
+        margin-right: 0;
+        background-color: #fff;
+        background-image: url("http://bup.edu.bd/assets_client/newNewCssJs/images/bup_logo.png");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 70px auto;
+        border-bottom: 1px solid #a4b7c1;
+    }
   .app-header.navbar .navbar-toggler {
     min-width: 50px;
     padding: 0.25rem 0; }

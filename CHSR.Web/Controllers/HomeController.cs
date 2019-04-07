@@ -5,13 +5,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CHSR.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CHSR.Web.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             return View();
         }
 
