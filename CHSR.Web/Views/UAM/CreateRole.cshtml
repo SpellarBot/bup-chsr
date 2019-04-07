@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "CreateRole";
+    ViewData["Name"] = "Insert Role";
+}
+
+@model CHSR.Web.Models.RoleViewModel;
+
+<div class="row">
+    <div class="col-md-6">
+        <h6>New Role</h6>
+        <form asp-action="CreateRole" asp-controller="UAM">
+            <div class="form-group">
+                <label class="col-form-label">Role Name</label>
+                <input class="form-control" asp-for="Name" type="text" placeholder="role name">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit" name="signup" value="Sign up">Insert</button>
+            </div>
+        </form>
+
+        @*<form action="/uam/createRole" method="post">
+            <label for="Name">Name</label>
+            <input type="text" name="Name" />
+            <input type="submit" name="submit" />
+        </form>*@
+
+    </div>
+</div>
