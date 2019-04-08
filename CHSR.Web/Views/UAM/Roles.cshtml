@@ -24,7 +24,7 @@
                     <thead>
                         <tr>
                             <th>Role</th>
-                            <th>Last Updated</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,7 +33,10 @@
                         {
                             <tr>
                                 <td>@item.Name</td>
-                                <td>2012/01/01</td>
+                                <td>
+                                    @*<a asp-controller="UAM" asp-action="RoleDetail" class="btn btn-primary" role="button">Detail</a>*@
+                                    <a asp-controller="UAM" asp-action="DeleteRole" asp-route-id="@item.Id" class="btn btn-danger" role="button">Remove</a>
+                                </td>
                             </tr>
                         }
                     </tbody>

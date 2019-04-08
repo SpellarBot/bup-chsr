@@ -44,6 +44,7 @@ namespace CHSR.Web
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
+
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -78,6 +79,8 @@ namespace CHSR.Web
             //{
             //    DummyData.Initialize(context, userManager, roleManager).Wait();// seed here
             //}
+
+            context.Database.Migrate();
 
             DummyData.Initialize(context, userManager, roleManager).Wait();// seed here
 
