@@ -84,6 +84,9 @@ namespace CHSR.Web
 
             DummyData.Initialize(context, userManager, roleManager).Wait();// seed here
 
+            app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
+            
+
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

@@ -7,6 +7,7 @@ using CHSR.Web.Models;
 using CHSR.Domain.UAM;
 using System.Collections.Generic;
 using CHSR.Web.Models.AccountViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CHSR.Web.Controllers
 {
@@ -48,6 +49,7 @@ namespace CHSR.Web.Controllers
             return View(userListViewModel);
         }
 
+        [Authorize(Roles ="Manager")]
         [HttpGet]
         public IActionResult CreateRole()
         {
