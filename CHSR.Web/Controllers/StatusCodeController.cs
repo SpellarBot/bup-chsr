@@ -14,6 +14,12 @@ namespace CHSR.Web.Controllers
             return View();
         }
 
+        [Route("error/403")]
+        public IActionResult Error403()
+        {
+            return View();
+        }
+
         [Route("error/501")]
         public IActionResult Error501()
         {
@@ -29,6 +35,11 @@ namespace CHSR.Web.Controllers
                 case 404:
                     {
                         return RedirectToAction("Error404", "StatusCode");
+                    }
+
+                case 501:
+                    {
+                        return RedirectToAction("Error403", "StatusCode");
                     }
             }
 

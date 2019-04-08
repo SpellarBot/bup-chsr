@@ -80,9 +80,9 @@ namespace CHSR.Web
             //    DummyData.Initialize(context, userManager, roleManager).Wait();// seed here
             //}
 
-            context.Database.Migrate();
 
-            DummyData.Initialize(context, userManager, roleManager).Wait();// seed here
+
+            //DummyData.Initialize(context, userManager, roleManager).Wait();// seed here
 
             app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
             

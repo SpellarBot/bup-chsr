@@ -100,5 +100,12 @@ namespace CHSR.Web.Controllers
         }
 
         #endregion
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied(string returnUrl = null)
+        {
+            return RedirectToAction("Index", "StatusCode", new { statusCode = 501 });
+        }
     }
 }

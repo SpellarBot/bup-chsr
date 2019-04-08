@@ -67,7 +67,7 @@ namespace CHSR.Web.Controllers
             return View();
         }
 
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles ="Manager")]
         [HttpGet]
         public IActionResult CreateRole()
         {
