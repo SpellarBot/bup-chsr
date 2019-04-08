@@ -8,6 +8,7 @@ using CHSR.Domain.UAM;
 using System.Collections.Generic;
 using CHSR.Web.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CHSR.Web.Controllers
 {
@@ -49,7 +50,24 @@ namespace CHSR.Web.Controllers
             return View(userListViewModel);
         }
 
-        [Authorize(Roles ="Manager")]
+        [HttpGet]
+        public IActionResult CreateUser()
+        {
+            var roles = _roleManager.Roles.ToList();
+
+            List<SelectListItem> mySkills = new List<SelectListItem>();
+
+            foreach (var role in roles)
+            {
+                mySkills.Add(new SelectListItem { Text = role.Name, Value = role.Id });
+            }
+
+            ViewData["Roles"] = mySkills;
+
+            return View();
+        }
+
+        [Authorize(Roles ="Admin")]
         [HttpGet]
         public IActionResult CreateRole()
         {
