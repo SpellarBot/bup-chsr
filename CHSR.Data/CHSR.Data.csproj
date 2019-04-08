@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CHSR.Domain\CHSR.Domain.csproj" />
+    <ProjectReference Include="..\CHSR.ViewModel\CHSR.ViewModel.csproj" />
   </ItemGroup>
 
 </Project>

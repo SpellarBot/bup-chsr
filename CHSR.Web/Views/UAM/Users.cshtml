@@ -38,7 +38,8 @@
                             <td>@item.Email</td>
                             <td>@item.RoleName</td>
                             <td>
-                                <span class="badge badge-success">Active</span>
+                                <a asp-controller="UAM" asp-action="UpdateUser" asp-route-id="@item.UserId" role="button" class="btn btn-primary">Edit</a>
+                                @*<span class="badge badge-success">Active</span>*@
                             </td>
                         </tr>
                         }

@@ -9,9 +9,11 @@ using System.Collections.Generic;
 using CHSR.Web.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using CHSR.ViewModel.Account;
 
 namespace CHSR.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UAMController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -36,6 +38,7 @@ namespace CHSR.Web.Controllers
             {
                 var userViewModel = new UserViewModel
                 {
+                    UserId = user.Id,
                     FullName = user.FirstName + " " + user.LastName,
                     Email = user.Email
                 };
@@ -59,7 +62,7 @@ namespace CHSR.Web.Controllers
 
             foreach (var role in roles)
             {
-                mySkills.Add(new SelectListItem { Text = role.Name, Value = role.Id });
+                mySkills.Add(new SelectListItem { Text = role.Name, Value = role.Name });
             }
 
             ViewData["Roles"] = mySkills;
@@ -67,7 +70,86 @@ namespace CHSR.Web.Controllers
             return View();
         }
 
-        [Authorize(Roles ="Manager")]
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(RegisterViewModel registerViewModel)
+        {
+            var user = new ApplicationUser
+            {
+                FirstName = registerViewModel.FirstName,
+                LastName = registerViewModel.LastName,
+                UserName = registerViewModel.Email,
+                Email = registerViewModel.Email
+            };
+
+            var userCreateResponse = await _userManager.CreateAsync(user, registerViewModel.Password);
+
+            if (userCreateResponse.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, registerViewModel.RoleId);
+            }
+
+            return RedirectToAction("Users");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateUser(string id)
+        {
+            var roles = _roleManager.Roles.ToList();
+
+            List<SelectListItem> mySkills = new List<SelectListItem>();
+
+            foreach (var role in roles)
+            {
+                mySkills.Add(new SelectListItem { Text = role.Name, Value = role.Name });
+            }
+
+            ViewData["Roles"] = mySkills;
+
+
+            var user = await _userManager.FindByIdAsync(id);
+            var userRoleNames = await _userManager.GetRolesAsync(user);
+
+            var userModel = new RegisterViewModel
+            { 
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Email = user.Email,
+                RoleId = userRoleNames.FirstOrDefault()
+            };
+
+            return View(userModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateUser(RegisterViewModel registerViewModel)
+        {
+
+
+            var userResponse = _userManager.FindByNameAsync(registerViewModel.UserName);
+
+            var user = userResponse.Result;
+
+            var roleNames = await _userManager.GetRolesAsync(user);
+
+            if (!roleNames.Contains(registerViewModel.RoleId))
+            {
+                await _userManager.RemoveFromRoleAsync(user, roleNames.FirstOrDefault());
+                await _userManager.AddToRoleAsync(user, registerViewModel.RoleId);
+            }
+
+
+            user.FirstName = registerViewModel.FirstName;
+            user.LastName = registerViewModel.LastName;
+            user.UserName = registerViewModel.Email;
+            user.Email = registerViewModel.Email;
+
+
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction("Users");
+        }
+
         [HttpGet]
         public IActionResult CreateRole()
         {

@@ -1,6 +1,8 @@
-﻿@{
-    ViewData["Title"] = "Create New User";
-    ViewData["Name"] = "Create New User";
+﻿
+@{
+    ViewData["Title"] = "Update User";
+    ViewData["Name"] = "Update User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @model RegisterViewModel
@@ -20,25 +22,20 @@
                     <input asp-for="LastName" class="form-control" />
                 </div>
                 <div class="form-group">
+                    <input asp-for="UserName" type="hidden" class="form-control" />
+                </div>
+                <div class="form-group">
                     <label asp-for="Email"></label>
                     <input asp-for="Email" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label asp-for="Password"></label>
-                    <input asp-for="Password" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="ConfirmPassword"></label>
-                    <input asp-for="ConfirmPassword" class="form-control" />
-                </div>
-                <div class="form-group">
                     <label for="sel1">Select Role:</label>
-                    <select class="form-control" asp-for="RoleId" asp-items="@ViewData["Roles"] as List<SelectListItem>">
-                    </select>
+                    <select class="form-control" asp-for="RoleId" asp-items="@ViewData["Roles"] as List<SelectListItem>"></select>
                 </div>
 
-                <button type="submit">Save</button>
+                <button type="submit">Update</button>
             </form>
         </section>
     </div>
 </div>
+

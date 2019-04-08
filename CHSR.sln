@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CHSR.Data", "CHSR.Data\CHSR
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{D5961D13-E36C-4DBD-B63F-A63513966CFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHSR.DataSeeder", "CHSR.DataSeeder\CHSR.DataSeeder.csproj", "{106F11DE-38F6-4DE1-B299-8B77F2503237}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CHSR.DataSeeder", "CHSR.DataSeeder\CHSR.DataSeeder.csproj", "{106F11DE-38F6-4DE1-B299-8B77F2503237}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHSR.ViewModel", "CHSR.ViewModel\CHSR.ViewModel.csproj", "{6E986D6B-A3BD-44FF-8BAC-2BF2A0950E63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{106F11DE-38F6-4DE1-B299-8B77F2503237}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{106F11DE-38F6-4DE1-B299-8B77F2503237}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{106F11DE-38F6-4DE1-B299-8B77F2503237}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E986D6B-A3BD-44FF-8BAC-2BF2A0950E63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E986D6B-A3BD-44FF-8BAC-2BF2A0950E63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E986D6B-A3BD-44FF-8BAC-2BF2A0950E63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E986D6B-A3BD-44FF-8BAC-2BF2A0950E63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +50,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E38BCAAD-A897-4D4B-9808-4EFF14527757} = {AFDE4943-B106-4605-B7B8-A19C327F8829}
 		{106F11DE-38F6-4DE1-B299-8B77F2503237} = {D5961D13-E36C-4DBD-B63F-A63513966CFA}
+		{6E986D6B-A3BD-44FF-8BAC-2BF2A0950E63} = {AFDE4943-B106-4605-B7B8-A19C327F8829}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E5139C48-0090-441F-8AD9-E25218B57D06}

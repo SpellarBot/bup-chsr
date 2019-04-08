@@ -47,14 +47,15 @@ namespace CHSR.Web
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
+                options.User.RequireUniqueEmail = true;
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 4;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
             })
-                                        .AddEntityFrameworkStores<ApplicationDbContext>()
-                                        .AddDefaultTokenProviders();
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
