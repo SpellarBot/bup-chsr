@@ -105,7 +105,7 @@ namespace CHSR.Web.Controllers
         [AllowAnonymous]
         public IActionResult AccessDenied(string returnUrl = null)
         {
-            return RedirectToAction("Index", "StatusCode", new { statusCode = 501 });
+            return RedirectToAction("Index", "StatusCode", new { statusCode = 403 });
         }
     }
 }

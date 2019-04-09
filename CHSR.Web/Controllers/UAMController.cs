@@ -150,6 +150,37 @@ namespace CHSR.Web.Controllers
             return RedirectToAction("Users");
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            return View(user);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> DeleteUser(ApplicationUser user)
+        {
+            var userInfo = await _userManager.FindByIdAsync(user.Id);
+
+            var userRoles = await _userManager.GetRolesAsync(userInfo);
+
+            await _userManager.DeleteAsync(userInfo);
+            await _userManager.RemoveFromRolesAsync(userInfo, userRoles);
+
+            return RedirectToAction("Users");
+        }
+
+
         [HttpGet]
         public IActionResult CreateRole()
         {
@@ -185,6 +216,29 @@ namespace CHSR.Web.Controllers
             var roleToDelete = await _roleManager.FindByIdAsync(role.Id);
             await _roleManager.DeleteAsync(roleToDelete);
             return RedirectToAction("Roles", "UAM");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangePassword(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            var registerViewModel = new RegisterViewModel
+            {
+                UserName = user.UserName,
+                Email = user.Email
+            };
+
+            return View(registerViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(RegisterViewModel registerViewModel)
+        {
+            var user = await _userManager.FindByNameAsync(registerViewModel.UserName);
+            await _userManager.RemovePasswordAsync(user);
+            await _userManager.AddPasswordAsync(user, registerViewModel.Password);
+            return RedirectToAction("Users");
         }
     }
 }

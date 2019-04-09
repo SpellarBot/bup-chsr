@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "DeleteUser";
+    ViewData["Name"] = "Delete User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model ApplicationUser
+
+<div class="row">
+    <div class="col-md-6">
+        <h1>Are you sure you want to delete @Model.FirstName @Model.LastName</h1>
+        <form asp-action="DeleteUser" asp-controller="UAM">
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Delete</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

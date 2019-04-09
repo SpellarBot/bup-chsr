@@ -39,7 +39,8 @@
                             <td>@item.RoleName</td>
                             <td>
                                 <a asp-controller="UAM" asp-action="UpdateUser" asp-route-id="@item.UserId" role="button" class="btn btn-primary">Edit</a>
-                                @*<span class="badge badge-success">Active</span>*@
+                                <a asp-controller="UAM" asp-action="DeleteUser" asp-route-id="@item.UserId" role="button" class="btn btn-danger">Delete</a>
+                                <a asp-controller="UAM" asp-action="ChangePassword" asp-route-id="@item.UserId" role="button" class="btn btn-warning">Change Password</a>
                             </td>
                         </tr>
                         }

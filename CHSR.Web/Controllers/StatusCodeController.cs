@@ -32,14 +32,14 @@ namespace CHSR.Web.Controllers
         {
             switch (statusCode)
             {
+                case 403:
+                    {
+                        return RedirectToAction("Error403", "StatusCode");
+                    }
+
                 case 404:
                     {
                         return RedirectToAction("Error404", "StatusCode");
-                    }
-
-                case 501:
-                    {
-                        return RedirectToAction("Error403", "StatusCode");
                     }
             }
 
