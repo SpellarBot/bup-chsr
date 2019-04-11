@@ -1,4 +1,4 @@
-﻿using CHSR.Domain;
+﻿using CHSR.Domain.Setup;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

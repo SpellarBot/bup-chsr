@@ -10,5 +10,10 @@
 @using CHSR.Web.Models.AccountViewModels
 @using CHSR.Domain
 @using CHSR.Domain.UAM
+@using CHSR.Domain.Setup
 @using CHSR.ViewModel.Account
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model ReflectionIT.Mvc.Paging.PagingList<CHSR.Domain.Setup.Institute>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging

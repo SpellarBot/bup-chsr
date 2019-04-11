@@ -70,7 +70,7 @@
 
     @if (User.Identity.IsAuthenticated)
     {
-        @Html.Partial("_AppHeader")
+        @await Html.PartialAsync("_AppHeader")
     }
 
     <div class="app-body">
@@ -78,16 +78,16 @@
         @if (User.Identity.IsAuthenticated)
         {
             <div class="sidebar">
-                @Html.Partial("_SidebarNav")
+                @await Html.PartialAsync("_SidebarNav")
             </div>
         }
 
     <main class="main">
 
-        @if (User.Identity.IsAuthenticated)
+        @*@if (User.Identity.IsAuthenticated)
         {
             @Html.Partial("_BreadCrumb")
-        }
+        }*@
 
         <div class="container-fluid">
 
@@ -97,13 +97,13 @@
 
     </main>
 
-        @Html.Partial("_AsideMenu")
+        @await Html.PartialAsync("_AsideMenu")
 
     </div>
 
     @if (User.Identity.IsAuthenticated)
     {
-        @Html.Partial("_Footer")
+        @await Html.PartialAsync("_Footer")
     }
 
     <!-- Bootstrap and necessary plugins -->

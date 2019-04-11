@@ -1,5 +1,5 @@
 ﻿
-namespace CHSR.Domain
+namespace CHSR.Domain.Setup
 {
     public class Institute : Entity
     {

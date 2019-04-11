@@ -20,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using CHSR.Repository;
 using CHSR.DataCrudService;
+using ReflectionIT.Mvc.Paging;
 
 namespace CHSR.Web
 {
@@ -48,6 +49,7 @@ namespace CHSR.Web
             services.AddScoped(typeof(Repository<>));
 
             services.AddScoped<AdmissionFormDataCrudService>();
+            services.AddScoped<InstituteDataCrudService>();
 
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -66,6 +68,7 @@ namespace CHSR.Web
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddPaging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

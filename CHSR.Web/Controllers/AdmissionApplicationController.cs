@@ -28,17 +28,7 @@ namespace CHSR.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(AdmissionApplication admissionApplication)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    return View();
-            //}
-           
-            if (!_validator.Validate(admissionApplication).IsValid)
-            {
-                return View();
-            }
-
-            await _service.Insert(admissionApplication);
+            _service.Insert(admissionApplication);
             return RedirectToAction("FormSubmissionStatus");
         }
 
