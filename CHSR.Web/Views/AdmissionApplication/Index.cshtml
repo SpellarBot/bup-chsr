@@ -1,16 +1,15 @@
 ﻿
 @{
-    Layout = null;
+    Layout = "_ErrorLayout";
 }
 
-<!DOCTYPE html>
+@model AdmissionApplication
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    HHH
-</body>
-</html>
+<h1>Admission Form</h1>
+
+<form asp-action="Index" asp-controller="AdmissionApplication">
+
+    @Html.TextBoxFor(x => x.CandidateNameEnglish)
+
+    <button type="submit">Submit</button>
+</form>

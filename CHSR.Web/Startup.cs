@@ -18,6 +18,8 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using CHSR.Repository;
+using CHSR.DataCrudService;
 
 namespace CHSR.Web
 {
@@ -43,6 +45,9 @@ namespace CHSR.Web
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped(typeof(Repository<>));
+
+            services.AddScoped<AdmissionFormDataCrudService>();
 
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>

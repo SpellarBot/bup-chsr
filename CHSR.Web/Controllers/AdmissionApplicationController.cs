@@ -1,30 +1,38 @@
 ﻿
+using CHSR.DataCrudService;
+using CHSR.Domain;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CHSR.Web.Controllers
 {
     public class AdmissionApplicationController : Controller
     {
-        public IActionResult Index()
+        private readonly AdmissionFormDataCrudService _service;
+
+        public AdmissionApplicationController(AdmissionFormDataCrudService admissionFormDataCrudService)
         {
-            return View("BasicInfo");
+            _service = admissionFormDataCrudService;
         }
 
+
         [HttpGet]
-        public IActionResult BasicInfo()
+        public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult BasicInfo(string abc)
+        public async Task<IActionResult> Index(AdmissionApplication admissionApplication)
         {
-            return RedirectToAction("AttachDocuments");
+
+            await _service.Insert(admissionApplication);
+            //return View();
+            return RedirectToAction("FormSubmissionStatus");
         }
 
-
         [HttpGet]
-        public IActionResult AttachDocuments(string abc)
+        public IActionResult FormSubmissionStatus()
         {
             return View();
         }
