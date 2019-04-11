@@ -13,9 +13,10 @@ namespace CHSR.Web.Controllers
 {
     public class InstituteController : BaseController<Institute>
     {
-
+        private ApplicationDbContext _context;
         public InstituteController(InstituteDataCrudService instituteDataCrudService, ApplicationDbContext context) : base(instituteDataCrudService)
         {
+            _context = context;
         }
 
         [HttpGet]
@@ -56,14 +57,15 @@ namespace CHSR.Web.Controllers
                 return RedirectToAction("Index", "StatusCode", new { statusCode = 404 });
             }
 
-            //var suppliers = await _context.Suppliers.SingleOrDefaultAsync(m => m.SupplierId == id);
             var institute = await dataCrudService.GetByIdAsync(id);
             if (institute == null)
             {
                 return NotFound();
             }
 
-            return View(institute);
+            ViewData["Institute"] = institute;
+
+            return View();
         }
     }
 }
