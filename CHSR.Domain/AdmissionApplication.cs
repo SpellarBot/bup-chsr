@@ -1,4 +1,6 @@
-﻿namespace CHSR.Domain
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CHSR.Domain
 {
     public class AdmissionApplication : Entity
     {

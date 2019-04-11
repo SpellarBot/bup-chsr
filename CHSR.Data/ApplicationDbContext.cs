@@ -31,6 +31,7 @@ namespace CHSR.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AdmissionApplicationConfiguration());
+            modelBuilder.ApplyConfiguration(new InstituteConfiguration());
 
             base.OnModelCreating(modelBuilder);
             // Customize the ASP.NET Identity model and override the defaults if needed.

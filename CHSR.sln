@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHSR.DataCrudService", "CHS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHSR.Repository", "CHSR.Repository\CHSR.Repository.csproj", "{FC7B92F8-3B91-4C6A-9D01-1DA88D71B043}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHSR.ValidatorService", "CHSR.ValidatorService\CHSR.ValidatorService.csproj", "{C6E06F94-C0E7-445D-AEF0-89FDD4170F40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{FC7B92F8-3B91-4C6A-9D01-1DA88D71B043}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC7B92F8-3B91-4C6A-9D01-1DA88D71B043}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC7B92F8-3B91-4C6A-9D01-1DA88D71B043}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6E06F94-C0E7-445D-AEF0-89FDD4170F40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6E06F94-C0E7-445D-AEF0-89FDD4170F40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6E06F94-C0E7-445D-AEF0-89FDD4170F40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6E06F94-C0E7-445D-AEF0-89FDD4170F40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{106F11DE-38F6-4DE1-B299-8B77F2503237} = {D5961D13-E36C-4DBD-B63F-A63513966CFA}
 		{6E986D6B-A3BD-44FF-8BAC-2BF2A0950E63} = {AFDE4943-B106-4605-B7B8-A19C327F8829}
 		{820890D2-ECEC-4073-BA9C-5FC090B6361F} = {D5961D13-E36C-4DBD-B63F-A63513966CFA}
+		{C6E06F94-C0E7-445D-AEF0-89FDD4170F40} = {D5961D13-E36C-4DBD-B63F-A63513966CFA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E5139C48-0090-441F-8AD9-E25218B57D06}

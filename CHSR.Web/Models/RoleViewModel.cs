@@ -1,4 +1,6 @@
-﻿namespace CHSR.Web.Models
+﻿
+
+namespace CHSR.Web.Models
 {
     public class RoleViewModel
     {

@@ -19,6 +19,7 @@
     <ProjectReference Include="..\CHSR.Data\CHSR.Data.csproj" />
     <ProjectReference Include="..\CHSR.Domain\CHSR.Domain.csproj" />
     <ProjectReference Include="..\CHSR.Repository\CHSR.Repository.csproj" />
+    <ProjectReference Include="..\CHSR.ValidatorService\CHSR.ValidatorService.csproj" />
     <ProjectReference Include="..\CHSR.ViewModel\CHSR.ViewModel.csproj" />
   </ItemGroup>
 
