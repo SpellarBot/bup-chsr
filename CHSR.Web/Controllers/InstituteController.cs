@@ -67,5 +67,90 @@ namespace CHSR.Web.Controllers
 
             return View();
         }
+
+        // GET: Suppliers/Edit/5
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var institute = await dataCrudService.GetByIdAsync(id);
+            if (institute == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["Institute"] = institute;
+
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id, InstituteName")] Institute institute)
+        {
+            if (id != institute.Id)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                //try
+                //{
+                //    _context.Update(suppliers);
+                //    await _context.SaveChangesAsync();
+                //}
+                //catch (DbUpdateConcurrencyException)
+                //{
+                //    if (!SuppliersExists(suppliers.SupplierId))
+                //    {
+                //        return NotFound();
+                //    }
+                //    else
+                //    {
+                //        throw;
+                //    }
+                //}
+
+                return RedirectToAction("Index");
+            }
+
+            dataCrudService.Update(institute);
+            await dataCrudService.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var institute = await dataCrudService.GetByIdAsync(id);
+            if (institute == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["Institute"] = institute;
+            return View();
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            dataCrudService.Delete(id);
+            await dataCrudService.SaveChangesAsync();
+            //_context.Suppliers.Remove(suppliers);
+            //await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
     }
 }
