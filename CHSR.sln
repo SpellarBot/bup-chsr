@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.28729.10
+VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHSR.Web", "CHSR.Web\CHSR.Web.csproj", "{B60A3572-ADFA-4F34-84BB-533D0F9852A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHSR", "CHSR\CHSR.csproj", "{773A1B70-5C3C-4E2A-BDF2-ED75D2F8E953}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B60A3572-ADFA-4F34-84BB-533D0F9852A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B60A3572-ADFA-4F34-84BB-533D0F9852A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B60A3572-ADFA-4F34-84BB-533D0F9852A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B60A3572-ADFA-4F34-84BB-533D0F9852A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{773A1B70-5C3C-4E2A-BDF2-ED75D2F8E953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{773A1B70-5C3C-4E2A-BDF2-ED75D2F8E953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{773A1B70-5C3C-4E2A-BDF2-ED75D2F8E953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{773A1B70-5C3C-4E2A-BDF2-ED75D2F8E953}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E5139C48-0090-441F-8AD9-E25218B57D06}
+		SolutionGuid = {BC61B9AA-597F-41B8-90A7-8656903B3568}
 	EndGlobalSection
 EndGlobal
