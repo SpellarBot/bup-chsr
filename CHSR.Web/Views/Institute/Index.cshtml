@@ -1,4 +1,6 @@
 ﻿
+@model IEnumerable<Institute>
+
 @{
     ViewData["Title"] = "Institutes";
 }
@@ -29,7 +31,7 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.InstituteName)
+                @item.InstituteName
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -40,8 +42,4 @@
         }
     </tbody>
 </table>
-
-<nav aria-label="Suppliers navigation example">
-    <vc:pager paging-list="@Model" />
-</nav>
 
