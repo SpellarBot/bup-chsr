@@ -2,6 +2,6 @@
 {
     public class Configuration
     {
-        public static string ConnectionString = @"Server=localhost\\SQLEXPRESS01;Database=chsrDb;Trusted_Connection=True;";
+        public static string ConnectionString = @"Server=localhost\\SQLEXPRESS;Database=chsrDb;Trusted_Connection=True;";
     }
 }

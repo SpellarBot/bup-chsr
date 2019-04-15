@@ -23,7 +23,8 @@ namespace CHSR.Repository
         public virtual void Delete(params object[] id)
         {
             TEntity entityToDelete = DbSet.Find(id);
-            Update(entityToDelete);
+            DbSet.Remove(entityToDelete);
+            //Update(entityToDelete);
         }
 
         public virtual void Delete(TEntity entityToDelete)
