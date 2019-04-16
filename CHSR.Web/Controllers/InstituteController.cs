@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using CHSR.DataCrudService;
 using System.Threading.Tasks;
-using ReflectionIT.Mvc.Paging;
 using CHSR.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -22,9 +21,8 @@ namespace CHSR.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int page = 1)
         {
-            var qry = dataCrudService.Get().AsNoTracking().OrderBy(x => x.InstituteName);
-            var model = await PagingList.CreateAsync(qry, 2, page);
-            return View(model);
+            var data = dataCrudService.Get().AsNoTracking().OrderBy(x => x.InstituteName).ToList();          
+            return View(data);
         }
 
         [HttpGet]
@@ -63,9 +61,7 @@ namespace CHSR.Web.Controllers
                 return NotFound();
             }
 
-            ViewData["Institute"] = institute;
-
-            return View();
+            return View(institute);
         }
 
         // GET: Suppliers/Edit/5

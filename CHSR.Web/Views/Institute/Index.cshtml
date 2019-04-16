@@ -1,70 +1,45 @@
 ﻿
+@model IEnumerable<Institute>
+
 @{
     ViewData["Title"] = "Institutes";
 }
 
+<h2>Institutes</h2>
 
-@if (Model.Count() <= 0)
-{
-    <div class="container">
-        <div class="row"></div>
-        <div class="row h-100 justify-content-center align-items-center">
-            <div class="col col-12">
-                <i class="fa fa-list fa-4x"></i>
-                <h3>
-                    No Institutes Found <a asp-action="Create">Click here to Create</a>
-                </h3>
-            </div>
-        </div>
-    </div>
-}
-else
-{
-    <div>
+@*<nav aria-label="Suppliers navigation example">
+    @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+</nav>*@
 
-    </div>
+<p>
+    <a asp-action="Create" asp-controller="Institute">Create New</a>
+</p>
 
-    <h2>Institutes</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
 
-    @*<nav aria-label="Suppliers navigation example">
-            @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
-        </nav>*@
+            <th></th>
 
-    <p>
-        <a asp-action="Create" asp-controller="Institute">Create New</a>
-    </p>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-
-                <th></th>
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.InstituteName)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <nav aria-label="Suppliers navigation example">
-        <vc:pager paging-list="@Model" />
-    </nav>
-}
-
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @item.InstituteName
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
 
