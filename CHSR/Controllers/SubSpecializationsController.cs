@@ -45,16 +45,9 @@ namespace CHSR.Controllers
         // GET: SubSpecializations/Create
         public async Task<IActionResult> Create()
         {
-            var specializations = await _context.Specializations.ToListAsync();
+            List<Specialization> specializations = _context.Specializations.ToListAsync().Result;
+            ViewData["specializations"] = specializations;
 
-            var specilizationList = new List<SelectListItem>();
-
-            foreach (var specilization in specializations)
-            {
-                specilizationList.Add(new SelectListItem { Text = specilization.Name, Value = specilization.Id.ToString() });
-            }
-
-            ViewData["Specializations"] = specilizationList;
             return View();
         }
 
@@ -63,10 +56,13 @@ namespace CHSR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] SubSpecialization subSpecialization)
+        public async Task<IActionResult> Create([Bind("Id,Name")] SubSpecialization subSpecialization,int SpecializationId)
         {
             if (ModelState.IsValid)
             {
+                var specialization = _context.Specializations.FindAsync(SpecializationId).Result;
+                subSpecialization.Specialization = specialization;
+
                 _context.Add(subSpecialization);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

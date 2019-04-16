@@ -2,8 +2,10 @@
 
 @{
     ViewData["Title"] = "Create";
+    List<Specialization> specializations = (List<Specialization>)ViewData["specializations"];
 
 }
+
 
 <h1>Create</h1>
 
@@ -17,6 +19,9 @@
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @Html.DropDownList("SpecializationId", new SelectList(specializations, "Id", "Name"))
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
