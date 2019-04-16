@@ -21,7 +21,7 @@ namespace CHSR.Controllers
         // GET: Institutes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Institute.ToListAsync());
+            return View(await _context.Institutes.ToListAsync());
         }
 
         // GET: Institutes/Details/5
@@ -32,7 +32,7 @@ namespace CHSR.Controllers
                 return NotFound();
             }
 
-            var institute = await _context.Institute
+            var institute = await _context.Institutes
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (institute == null)
             {
@@ -72,7 +72,7 @@ namespace CHSR.Controllers
                 return NotFound();
             }
 
-            var institute = await _context.Institute.FindAsync(id);
+            var institute = await _context.Institutes.FindAsync(id);
             if (institute == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace CHSR.Controllers
                 return NotFound();
             }
 
-            var institute = await _context.Institute
+            var institute = await _context.Institutes
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (institute == null)
             {
@@ -138,15 +138,15 @@ namespace CHSR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var institute = await _context.Institute.FindAsync(id);
-            _context.Institute.Remove(institute);
+            var institute = await _context.Institutes.FindAsync(id);
+            _context.Institutes.Remove(institute);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool InstituteExists(int id)
         {
-            return _context.Institute.Any(e => e.ID == id);
+            return _context.Institutes.Any(e => e.ID == id);
         }
     }
 }
