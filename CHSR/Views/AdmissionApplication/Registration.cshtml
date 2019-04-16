@@ -1,0 +1,72 @@
+﻿
+@model AdmissionApplication
+
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<h1>Registration</h1>
+
+<form asp-action="Registration" asp-controller="AdmissionApplication">
+    <div class="form-group">
+        <label asp-for="ProgramName"></label>
+        <select class="form-control" asp-for="ProgramName" asp-items="@ViewData["ProgramList"] as List<SelectListItem>"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CandidateNameBangla"></label>
+        <input type="text" asp-for="CandidateNameBangla" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CandidateNameEnglish"></label>
+        <input type="text" asp-for="CandidateNameBangla" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FatherName"></label>
+        <input type="text" asp-for="FatherName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MotherName"></label>
+        <input type="text" asp-for="MotherName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SpouseName"></label>
+        <input type="text" asp-for="SpouseName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PermanentAddress"></label>
+        <textarea asp-for="PermanentAddress" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PresentAddress"></label>
+        <textarea asp-for="PresentAddress" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Nationality"></label>
+        <select class="form-control" asp-for="Nationality" asp-items="@ViewData["CountryList"] as List<SelectListItem>"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DOB"></label>
+        <input type="date" asp-for="DOB" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NationalIdNo"></label>
+        <input type="date" asp-for="NationalIdNo" class="form-control" />
+    </div>
+
+    @*<div class="form-group">
+        <label asp-for="Te"></label>
+        <input type="date" asp-for="NationalIdNo" class="form-control" />
+    </div>*@
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

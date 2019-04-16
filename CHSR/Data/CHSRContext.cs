@@ -15,6 +15,6 @@ namespace CHSR.Models
         }
 
         public DbSet<Institute> Institutes { get; set; }
-        public DbSet<AdmissionApplication> AdmissionApplications { get; set; }
+        //public DbSet<AdmissionApplication> AdmissionApplications { get; set; }
     }
 }
