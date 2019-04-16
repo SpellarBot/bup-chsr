@@ -200,7 +200,8 @@ namespace CHSR.Web.Controllers
         [HttpGet]
         public IActionResult Roles()
         {
-            return View(_context.Roles.ToList());
+            ViewData["RoleList"] = _context.Roles.ToList();
+            return View();
         }
 
         [HttpGet]

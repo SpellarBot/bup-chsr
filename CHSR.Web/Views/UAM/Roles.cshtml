@@ -1,9 +1,11 @@
-﻿@model IEnumerable<IdentityRole>
-
+﻿
+@model ReflectionIT.Mvc.Paging.PagingList<IdentityRole>
 
 @{
     ViewData["Title"] = "RoleList";
     ViewData["Name"] = "Role List";
+
+    var roles = ViewData["RoleList"] as List<IdentityRole>;
 }
 
 <div class="row">
@@ -29,7 +31,7 @@
                     </thead>
                     <tbody>
 
-                        @foreach (var item in Model)
+                        @foreach (var item in roles)
                         {
                             <tr>
                                 <td>@item.Name</td>

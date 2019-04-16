@@ -24,7 +24,7 @@ namespace CHSR.DataSeeder
                 await roleManager.CreateAsync(new IdentityRole() { Name = role1 });
             }
 
-            if (await userManager.FindByNameAsync("admin@bookish.com") == null)
+            if (await userManager.FindByNameAsync("admin@bup.com") == null)
             {
                 var user = new ApplicationUser
                 {
