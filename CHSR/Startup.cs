@@ -52,8 +52,8 @@ namespace CHSR
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, CHSRContext context)
         {
 
-            //context.Database.EnsureDeleted();
-            //context.Database.EnsureCreated();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
 
             if (env.IsDevelopment())
             {
