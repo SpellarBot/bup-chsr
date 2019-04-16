@@ -15,6 +15,15 @@ namespace CHSR.Models
         }
 
         public DbSet<Institute> Institutes { get; set; }
+        public DbSet<Faculty> Faculties { get; set; }
         public DbSet<AdmissionApplication> AdmissionApplications { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Institute>()
+                .HasMany(c => c.Faculties)
+                .WithOne(e => e.Institute)
+                .IsRequired();
+        }
     }
 }

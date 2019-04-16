@@ -21,7 +21,7 @@ namespace CHSR.Controllers
         // GET: Faculties
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Faculty.ToListAsync());
+            return View(await _context.Faculties.ToListAsync());
         }
 
         // GET: Faculties/Details/5
@@ -32,7 +32,7 @@ namespace CHSR.Controllers
                 return NotFound();
             }
 
-            var faculty = await _context.Faculty
+            var faculty = await _context.Faculties
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (faculty == null)
             {
@@ -45,6 +45,8 @@ namespace CHSR.Controllers
         // GET: Faculties/Create
         public IActionResult Create()
         {
+            List<Institute> institutes =  _context.Institutes.ToListAsync().Result;
+            ViewData["ins"] = institutes;
             return View();
         }
 
@@ -72,7 +74,7 @@ namespace CHSR.Controllers
                 return NotFound();
             }
 
-            var faculty = await _context.Faculty.FindAsync(id);
+            var faculty = await _context.Faculties.FindAsync(id);
             if (faculty == null)
             {
                 return NotFound();
@@ -123,7 +125,7 @@ namespace CHSR.Controllers
                 return NotFound();
             }
 
-            var faculty = await _context.Faculty
+            var faculty = await _context.Faculties
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (faculty == null)
             {
@@ -138,15 +140,15 @@ namespace CHSR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var faculty = await _context.Faculty.FindAsync(id);
-            _context.Faculty.Remove(faculty);
+            var faculty = await _context.Faculties.FindAsync(id);
+            _context.Faculties.Remove(faculty);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool FacultyExists(int id)
         {
-            return _context.Faculty.Any(e => e.ID == id);
+            return _context.Faculties.Any(e => e.ID == id);
         }
     }
 }
