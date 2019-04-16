@@ -7,7 +7,19 @@
 
 <h1>Registration</h1>
 
-<form asp-action="Registration" asp-controller="AdmissionApplication">
+<form asp-action="Registration" asp-controller="AdmissionApplication" enctype="multipart/form-data">
+
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+        </div>
+        <div class="custom-file">
+            <input type="file" asp-for="ProfilePicture" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+        </div>
+    </div>
+
     <div class="form-group">
         <label asp-for="ProgramName"></label>
         <select class="form-control" asp-for="ProgramName" asp-items="@ViewData["ProgramList"] as List<SelectListItem>"></select>
@@ -20,7 +32,7 @@
 
     <div class="form-group">
         <label asp-for="CandidateNameEnglish"></label>
-        <input type="text" asp-for="CandidateNameBangla" class="form-control" />
+        <input type="text" asp-for="CandidateNameEnglish" class="form-control" />
     </div>
 
     <div class="form-group">
@@ -54,19 +66,324 @@
     </div>
 
     <div class="form-group">
+        <label asp-for="Religion"></label>
+        <input type="text" asp-for="Religion" class="form-control" />
+    </div>
+
+    <div class="form-group">
         <label asp-for="DOB"></label>
         <input type="date" asp-for="DOB" class="form-control" />
     </div>
 
     <div class="form-group">
         <label asp-for="NationalIdNo"></label>
-        <input type="date" asp-for="NationalIdNo" class="form-control" />
+        <input type="text" asp-for="NationalIdNo" class="form-control" />
     </div>
 
-    @*<div class="form-group">
-        <label asp-for="Te"></label>
-        <input type="date" asp-for="NationalIdNo" class="form-control" />
-    </div>*@
+    <div class="form-group">
+        <label asp-for="Telephone"></label>
+        <input type="tel" asp-for="Telephone" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Mobile"></label>
+        <input type="tel" asp-for="Mobile" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input type="email" asp-for="Email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EmergencyContactNo"></label>
+        <input type="tel" asp-for="EmergencyContactNo" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TitleOfResearch"></label>
+        <input type="text" asp-for="TitleOfResearch" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NumberOfPublishedJournal"></label>
+        <input type="number" asp-for="NumberOfPublishedJournal" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PassportNumber"></label>
+        <input type="text" asp-for="PassportNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PassportIssuingAuthority"></label>
+        <input type="text" asp-for="PassportIssuingAuthority" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="VisaType"></label>
+        <input type="text" asp-for="VisaType" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="VisaDuration"></label>
+        <input type="text" asp-for="VisaDuration" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EmbassyContactName"></label>
+        <input type="text" asp-for="EmbassyContactName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EmbassyContactDesignation"></label>
+        <input type="text" asp-for="EmbassyContactDesignation" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EmbassyContactTelephoneNumber"></label>
+        <input type="tel" asp-for="EmbassyContactTelephoneNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EmbassyContactMobileNumber"></label>
+        <input type="tel" asp-for="EmbassyContactMobileNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EmbassyContactEmail"></label>
+        <input type="email" asp-for="EmbassyContactEmail" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PaymentAmountBDT"></label>
+        <input type="number" asp-for="PaymentAmountBDT" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PaymentTraceId"></label>
+        <input type="text" asp-for="PaymentTraceId" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PaymentNameOfBranch"></label>
+        <input type="text" asp-for="PaymentNameOfBranch" class="form-control" />
+    </div>
+
+    @*<div class="checkbox">
+            <label><input type="checkbox" asp-for="IsPaid">Is Paid</label>
+        </div>
+
+        <div class="checkbox">
+            <label><input type="checkbox" asp-for="IsShortListed">Is Short Listed</label>
+        </div>*@
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name of Examination</th>
+                <th>Passing Year</th>
+                <th>Name of Department/Group</th>
+                <th>Institution/University</th>
+                <th>GPA/CGPA/Division/Class</th>
+                <th>Total Number in case of Division/Class with %</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>S.S.C or Equivalent</td>
+                <td>
+                    <input type="number" asp-for="SSC_PassingYear" />
+                </td>
+                <td>
+                    <input type="text" asp-for="SSC_Group" />
+                </td>
+                <td>
+                    <input type="text" asp-for="SSC_Institute" />
+                </td>
+                <td>
+                    <input type="number" asp-for="SSC_GPA" />
+                </td>
+                <td>
+                    <input type="number" asp-for="SSC_TotalNumber" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>H.S.C or Equivalent</td>
+                <td>
+                    <input type="number" asp-for="HSC_PassingYear" />
+                </td>
+                <td>
+                    <input type="text" asp-for="HSC_Group" />
+                </td>
+                <td>
+                    <input type="text" asp-for="HSC_Institute" />
+                </td>
+                <td>
+                    <input type="number" asp-for="HSC_GPA" />
+                </td>
+                <td>
+                    <input type="number" asp-for="HSC_TotalNumber" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>Bechelor Degree</td>
+                <td>
+                    <input type="number" asp-for="BachelorDegree_PassingYear" />
+                </td>
+                <td>
+                    <input type="text" asp-for="BachelorDegree_Group" />
+                </td>
+                <td>
+                    <input type="text" asp-for="BachelorDegree_Institute" />
+                </td>
+                <td>
+                    <input type="number" asp-for="BachelorDegree_GPA" />
+                </td>
+                <td>
+                    <input type="number" asp-for="BachelorDegree_TotalNumber" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>Master Degree</td>
+                <td>
+                    <input type="number" asp-for="MasterDegree_PassingYear" />
+                </td>
+                <td>
+                    <input type="text" asp-for="MasterDegree_Group" />
+                </td>
+                <td>
+                    <input type="text" asp-for="MasterDegree_Institute" />
+                </td>
+                <td>
+                    <input type="number" asp-for="MasterDegree_GPA" />
+                </td>
+                <td>
+                    <input type="number" asp-for="MasterDegree_TotalNumber" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>MPhil</td>
+                <td>
+                    <input type="number" asp-for="MasterDegree_PassingYear" />
+                </td>
+                <td>
+                    <input type="text" asp-for="MasterDegree_Group" />
+                </td>
+                <td>
+                    <input type="text" asp-for="MasterDegree_Institute" />
+                </td>
+                <td>
+                    <input type="number" asp-for="MasterDegree_GPA" />
+                </td>
+                <td>
+                    <input type="number" asp-for="MasterDegree_TotalNumber" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>Any other</td>
+                <td>
+                    <input type="number" asp-for="AnyOther_PassingYear" />
+                </td>
+                <td>
+                    <input type="text" asp-for="AnyOther_Group" />
+                </td>
+                <td>
+                    <input type="text" asp-for="AnyOther_Institute" />
+                </td>
+                <td>
+                    <input type="number" asp-for="AnyOther_GPA" />
+                </td>
+                <td>
+                    <input type="number" asp-for="AnyOther_TotalNumber" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-bordered">
+        <tr>
+            <td rowspan="2">Name of Organization</td>
+            <td colspan="3">Duration</td>
+            <td rowspan="2">Designation</td>
+            <td rowspan="2">Short Responsibilities/Field of Research</td>
+        </tr>
+
+        <tr>
+
+            <td>From</td>
+            <td>To</td>
+            <td>
+                Total (Years & Months)
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <input type="text" asp-for="ResearchInformationOneName" />
+            </td>
+            <td>
+                <input type="date" asp-for="ResearchInformationOneFrom" />
+            </td>
+            <td>
+                <input type="date" asp-for="ResearchInformationOneTo" />
+            </td>
+            <td>
+                <input type="text" asp-for="ResearchInformationOneTotalDuration" />
+            </td>
+            <td>
+                <input type="text" asp-for="ResearchInformationThreeDesignation" />
+            </td>
+            <td>
+                <input type="text" asp-for="ResearchInformationOneResponsibility" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" asp-for="ResearchInformationTwoName" />
+            </td>
+            <td>
+                <input type="date" asp-for="ResearchInformationTwoFrom" />
+            </td>
+            <td>
+                <input type="date" asp-for="ResearchInformationTwoTo" />
+            </td>
+            <td>
+                <input type="text" asp-for="ResearchInformationTwoTotalDuration" />
+            </td>
+            <td>
+                <input type="text" asp-for="ResearchInformationTwoDesignation" />
+            </td>
+            <td>
+                <input type="text" asp-for="ResearchInformationTwoResponsibility" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" asp-for="ResearchInformationThreeName" />
+            </td>
+            <td>
+                <input type="date" asp-for="ResearchInformationThreeFrom" />
+            </td>
+            <td>
+                <input type="date" asp-for="ResearchInformationThreeTo" />
+            </td>
+            <td>
+                <input type="text" asp-for="ResearchInformationThreeTotalDuration" />
+            </td>
+            <td>
+                <input type="text" asp-for="ResearchInformationThreeDesignation" />
+            </td>
+            <td>
+                <input type="text" asp-for="ResearchInformationThreeResponsibility" />
+            </td>
+        </tr>
+    </table>
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

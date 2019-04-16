@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CHSR.Models;
@@ -63,7 +64,18 @@ namespace CHSR.Controllers
         [HttpPost]
         public async Task<IActionResult> Registration(AdmissionApplication admissionApplication)
         {
-            //await _context.AdmissionApplications.AddAsync(admissionApplication);
+            if (admissionApplication.ProfilePicture != null || admissionApplication.ProfilePicture.Length > 0)
+            {
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", admissionApplication.ProfilePicture.FileName);
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await admissionApplication.ProfilePicture.CopyToAsync(stream);
+                    admissionApplication.ProfilePictureId = admissionApplication.ProfilePicture.FileName;
+                }
+            }
+
+            await _context.AdmissionApplications.AddAsync(admissionApplication);
             await _context.SaveChangesAsync();
             return View();
         }

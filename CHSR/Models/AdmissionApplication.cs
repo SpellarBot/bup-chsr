@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CHSR.Models
 {
@@ -27,18 +28,15 @@ namespace CHSR.Models
         public string Mobile { get; set; }
         public string Email { get; set; }
         public string EmergencyContactNo { get; set; }
-        public EducationalInfo SSC { get; set; }
-        public EducationalInfo HSC { get; set; }
-        public EducationalInfo BachelorDegree { get; set; }
-        public EducationalInfo MasterDegree { get; set; }
-        public EducationalInfo MPhilDegree { get; set; }
-        public EducationalInfo AnyOther { get; set; }
         public string TitleOfResearch { get; set; }
-        public string NumberOfPublishedJournal { get; set; }
+        public int NumberOfPublishedJournal { get; set; }
         public string PassportNumber { get; set; }
         public string PassportIssuingAuthority { get; set; }
+
+        // need to discuss
         public string VisaType { get; set; }
         public string VisaDuration { get; set; }
+
         public string EmbassyContactName { get; set; }
         public string EmbassyContactDesignation { get; set; }
         public string EmbassyContactTelephoneNumber { get; set; }
@@ -47,11 +45,81 @@ namespace CHSR.Models
         public decimal PaymentAmountBDT { get; set; }
         public string PaymentTraceId { get; set; }
         public string PaymentNameOfBranch { get; set; }
-        public string Signature { get; set; }
-        public OrganizationExperience ResearchInformationOne { get; set; }
-        public OrganizationExperience ResearchInformationTwo { get; set; }
-        public OrganizationExperience ResearchInformationThree { get; set; }
-        public OrganizationExperience ResearchInformationFour { get; set; }
-        public OrganizationExperience ResearchInformationFive { get; set; }
+        // Admin Input
+        public bool IsPaid { get; set; }
+        public bool IsShortListed { get; set; }
+
+
+        // Educational Information
+        public int SSC_PassingYear { get; set; }
+        public string SSC_Group { get; set; }
+        public string SSC_Institute { get; set; }
+        public decimal SSC_GPA { get; set; }
+        public decimal SSC_TotalNumber { get; set; }
+
+        public int HSC_PassingYear { get; set; }
+        public string HSC_Group { get; set; }
+        public string HSC_Institute { get; set; }
+        public decimal HSC_GPA { get; set; }
+        public decimal HSC_TotalNumber { get; set; }
+
+        public int BachelorDegree_PassingYear { get; set; }
+        public string BachelorDegree_Group { get; set; }
+        public string BachelorDegree_Institute { get; set; }
+        public decimal BachelorDegree_GPA { get; set; }
+        public decimal BachelorDegree_TotalNumber { get; set; }
+
+        public int MasterDegree_PassingYear { get; set; }
+        public string MasterDegree_Group { get; set; }
+        public string MasterDegree_Institute { get; set; }
+        public decimal MasterDegree_GPA { get; set; }
+        public decimal MasterDegree_TotalNumber { get; set; }
+
+        public int MPhilDegree_PassingYear { get; set; }
+        public string MPhilDegree_Group { get; set; }
+        public string MPhilDegree_Institute { get; set; }
+        public decimal MPhilDegree_GPA { get; set; }
+        public decimal MPhilDegree_TotalNumber { get; set; }
+
+        public int AnyOther_PassingYear { get; set; }
+        public string AnyOther_Group { get; set; }
+        public string AnyOther_Institute { get; set; }
+        public decimal AnyOther_GPA { get; set; }
+        public decimal AnyOther_TotalNumber { get; set; }
+
+        //public string Signature { get; set; }
+
+        //public OrganizationExperience ResearchInformationOne { get; set; }
+        //public OrganizationExperience ResearchInformationTwo { get; set; }
+        //public OrganizationExperience ResearchInformationThree { get; set; }
+        //public OrganizationExperience ResearchInformationFour { get; set; }
+        //public OrganizationExperience ResearchInformationFive { get; set; }
+
+        // Organization Experience
+        public string ResearchInformationOneName { get; set; }
+        public DateTime ResearchInformationOneFrom { get; set; }
+        public DateTime ResearchInformationOneTo { get; set; }
+        public string ResearchInformationOneTotalDuration { get; set; }
+        public string ResearchInformationOneDesignation { get; set; }
+        public string ResearchInformationOneResponsibility { get; set; }
+
+        public string ResearchInformationTwoName { get; set; }
+        public DateTime ResearchInformationTwoFrom { get; set; }
+        public DateTime ResearchInformationTwoTo { get; set; }
+        public string ResearchInformationTwoTotalDuration { get; set; }
+        public string ResearchInformationTwoDesignation { get; set; }
+        public string ResearchInformationTwoResponsibility { get; set; }
+
+        public string ResearchInformationThreeName { get; set; }
+        public DateTime ResearchInformationThreeFrom { get; set; }
+        public DateTime ResearchInformationThreeTo { get; set; }
+        public string ResearchInformationThreeTotalDuration { get; set; }
+        public string ResearchInformationThreeDesignation { get; set; }
+        public string ResearchInformationThreeResponsibility { get; set; }
+
+        public string ProfilePictureId { get; set; }
+
+        [NotMapped]
+        public IFormFile ProfilePicture { get; set; }
     }
 }

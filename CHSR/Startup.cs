@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CHSR.Models;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace CHSR
 {
@@ -28,6 +30,8 @@ namespace CHSR
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -52,8 +56,8 @@ namespace CHSR
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, CHSRContext context)
         {
 
-            //context.Database.EnsureDeleted();
-            //context.Database.EnsureCreated();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
 
             if (env.IsDevelopment())
             {
