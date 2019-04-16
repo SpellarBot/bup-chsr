@@ -55,10 +55,13 @@ namespace CHSR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name")] Faculty faculty)
+        public async Task<IActionResult> Create([Bind("ID,Name")] Faculty faculty, int instituteID)
         {
             if (ModelState.IsValid)
             {
+                var institute= _context.Institutes.FindAsync(instituteID).Result;
+                faculty.Institute = institute;
+
                 _context.Add(faculty);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

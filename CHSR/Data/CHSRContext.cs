@@ -26,6 +26,9 @@ namespace CHSR.Models
                 .HasMany(c => c.Faculties)
                 .WithOne(e => e.Institute)
                 .IsRequired();
+
+
+            modelBuilder.Entity<Institute>().HasData(new Institute { ID = 1, Name = "AIUB", Location = "KURIL" });
         }
     }
 }
