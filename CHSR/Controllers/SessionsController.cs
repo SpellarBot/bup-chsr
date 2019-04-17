@@ -9,23 +9,22 @@ using CHSR.Models;
 
 namespace CHSR.Controllers
 {
-    public class FacultiesController : Controller
+    public class SessionsController : Controller
     {
         private readonly CHSRContext _context;
 
-        public FacultiesController(CHSRContext context)
+        public SessionsController(CHSRContext context)
         {
             _context = context;
         }
 
-        // GET: Faculties
+        // GET: Sessions
         public async Task<IActionResult> Index()
         {
-             
-             return View(await _context.Faculties.ToListAsync());
+            return View(await _context.Sessions.ToListAsync());
         }
 
-        // GET: Faculties/Details/5
+        // GET: Sessions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,44 +32,41 @@ namespace CHSR.Controllers
                 return NotFound();
             }
 
-            var faculty = await _context.Faculties
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (faculty == null)
+            var session = await _context.Sessions
+                .FirstOrDefaultAsync(m => m.id == id);
+            if (session == null)
             {
                 return NotFound();
             }
 
-            return View(faculty);
+            return View(session);
         }
 
-        // GET: Faculties/Create
+        // GET: Sessions/Create
         public IActionResult Create()
         {
-            List<Institute> institutes =  _context.Institutes.ToListAsync().Result;
-            ViewData["ins"] = institutes;
+
+
             return View();
         }
 
-        // POST: Faculties/Create
+        // POST: Sessions/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name")] Faculty faculty, int instituteID)
+        public async Task<IActionResult> Create([Bind("id,SessionCreate,RegistrationExpired")] Session session)
         {
             if (ModelState.IsValid)
             {
-                var institute= _context.Institutes.FindAsync(instituteID).Result;
-                faculty.Institute = institute;
-
-                _context.Add(faculty);
+                _context.Add(session);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(faculty);
+            return View(session);
         }
 
-        // GET: Faculties/Edit/5
+        // GET: Sessions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,24 +74,22 @@ namespace CHSR.Controllers
                 return NotFound();
             }
 
-            var faculty = await _context.Faculties.Where(c => c.ID == id).Include(c => c.Institute).FirstOrDefaultAsync();
-            ViewData["faculty"] = faculty;
-                
-            if (faculty == null)
+            var session = await _context.Sessions.FindAsync(id);
+            if (session == null)
             {
                 return NotFound();
             }
-            return View(faculty);
+            return View(session);
         }
 
-        // POST: Faculties/Edit/5
+        // POST: Sessions/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Faculty faculty)
+        public async Task<IActionResult> Edit(int id, [Bind("id,SessionCreate,RegistrationExpired")] Session session)
         {
-            if (id != faculty.ID)
+            if (id != session.id)
             {
                 return NotFound();
             }
@@ -104,12 +98,12 @@ namespace CHSR.Controllers
             {
                 try
                 {
-                    _context.Update(faculty);
+                    _context.Update(session);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FacultyExists(faculty.ID))
+                    if (!SessionExists(session.id))
                     {
                         return NotFound();
                     }
@@ -120,10 +114,10 @@ namespace CHSR.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(faculty);
+            return View(session);
         }
 
-        // GET: Faculties/Delete/5
+        // GET: Sessions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,30 +125,30 @@ namespace CHSR.Controllers
                 return NotFound();
             }
 
-            var faculty = await _context.Faculties
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (faculty == null)
+            var session = await _context.Sessions
+                .FirstOrDefaultAsync(m => m.id == id);
+            if (session == null)
             {
                 return NotFound();
             }
 
-            return View(faculty);
+            return View(session);
         }
 
-        // POST: Faculties/Delete/5
+        // POST: Sessions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var faculty = await _context.Faculties.FindAsync(id);
-            _context.Faculties.Remove(faculty);
+            var session = await _context.Sessions.FindAsync(id);
+            _context.Sessions.Remove(session);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FacultyExists(int id)
+        private bool SessionExists(int id)
         {
-            return _context.Faculties.Any(e => e.ID == id);
+            return _context.Sessions.Any(e => e.id == id);
         }
     }
 }

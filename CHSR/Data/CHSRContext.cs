@@ -16,6 +16,7 @@ namespace CHSR.Models
 
         public DbSet<Institute> Institutes { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
+        public DbSet<Session> Sessions { get; set; }
         public DbSet<AdmissionApplication> AdmissionApplications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,5 +29,7 @@ namespace CHSR.Models
 
             modelBuilder.Entity<Institute>().HasData(new Institute { ID = 1, Name = "AIUB", Location = "KURIL" });
         }
+
+        public DbSet<CHSR.Models.Session> Session { get; set; }
     }
 }
