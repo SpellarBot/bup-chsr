@@ -26,6 +26,8 @@ namespace CHSR.Models
         public string NationalIdNo { get; set; }
         public string Telephone { get; set; }
         public string Mobile { get; set; }
+
+        [Required]
         public string Email { get; set; }
         public string EmergencyContactNo { get; set; }
         public string TitleOfResearch { get; set; }
@@ -86,16 +88,6 @@ namespace CHSR.Models
         public string AnyOther_Institute { get; set; }
         public decimal AnyOther_GPA { get; set; }
         public decimal AnyOther_TotalNumber { get; set; }
-
-        //public string Signature { get; set; }
-
-        //public OrganizationExperience ResearchInformationOne { get; set; }
-        //public OrganizationExperience ResearchInformationTwo { get; set; }
-        //public OrganizationExperience ResearchInformationThree { get; set; }
-        //public OrganizationExperience ResearchInformationFour { get; set; }
-        //public OrganizationExperience ResearchInformationFive { get; set; }
-
-        // Organization Experience
         public string ResearchInformationOneName { get; set; }
         public DateTime ResearchInformationOneFrom { get; set; }
         public DateTime ResearchInformationOneTo { get; set; }
@@ -121,5 +113,8 @@ namespace CHSR.Models
 
         [NotMapped]
         public IFormFile ProfilePicture { get; set; }
+
+        public string TraceId { get; set; }
+        public bool IsDraft { get; set; }
     }
 }

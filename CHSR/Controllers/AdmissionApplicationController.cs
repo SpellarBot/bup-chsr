@@ -64,19 +64,35 @@ namespace CHSR.Controllers
         [HttpPost]
         public async Task<IActionResult> Registration(AdmissionApplication admissionApplication)
         {
+            var traceId = Guid.NewGuid().ToString();
+            var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents", traceId);
+
+            if (!Directory.Exists(rootPath))
+            {
+                Directory.CreateDirectory(rootPath);
+            }
+
             if (admissionApplication.ProfilePicture != null || admissionApplication.ProfilePicture.Length > 0)
             {
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", admissionApplication.ProfilePicture.FileName);
+                var profilePicturePath = Path.Combine(rootPath, admissionApplication.ProfilePicture.FileName);
 
-                using (var stream = new FileStream(path, FileMode.Create))
+                using (var stream = new FileStream(profilePicturePath, FileMode.Create))
                 {
                     await admissionApplication.ProfilePicture.CopyToAsync(stream);
                     admissionApplication.ProfilePictureId = admissionApplication.ProfilePicture.FileName;
                 }
             }
 
+            admissionApplication.IsDraft = true;
+            admissionApplication.TraceId = traceId;
             await _context.AdmissionApplications.AddAsync(admissionApplication);
             await _context.SaveChangesAsync();
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult DocumentAttachments(string traceId)
+        {
             return View();
         }
     }
