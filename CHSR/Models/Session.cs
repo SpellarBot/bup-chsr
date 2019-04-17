@@ -7,7 +7,7 @@ namespace CHSR.Models
 {
     public class Session
     {
-        public int id { get; set; }
+        public string id { get; set; }
         public string SessionCreate { get; set; }
        
         public DateTime RegistrationExpired { get; set; }

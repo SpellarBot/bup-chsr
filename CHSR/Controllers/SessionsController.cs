@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CHSR.Models;
 
+
 namespace CHSR.Controllers
 {
     public class SessionsController : Controller
@@ -25,7 +26,7 @@ namespace CHSR.Controllers
         }
 
         // GET: Sessions/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -59,6 +60,9 @@ namespace CHSR.Controllers
         {
             if (ModelState.IsValid)
             {
+                Random rand = new Random();
+
+                session.id = DateTime.Today.Year.ToString() + DateTime.Today.Month.ToString()+rand.Next(5000);
                 _context.Add(session);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,8 +70,10 @@ namespace CHSR.Controllers
             return View(session);
         }
 
+      
+
         // GET: Sessions/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -87,7 +93,7 @@ namespace CHSR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,SessionCreate,RegistrationExpired")] Session session)
+        public async Task<IActionResult> Edit(string id, [Bind("id,SessionCreate,RegistrationExpired")] Session session)
         {
             if (id != session.id)
             {
@@ -118,7 +124,7 @@ namespace CHSR.Controllers
         }
 
         // GET: Sessions/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -138,7 +144,7 @@ namespace CHSR.Controllers
         // POST: Sessions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var session = await _context.Sessions.FindAsync(id);
             _context.Sessions.Remove(session);
@@ -146,7 +152,7 @@ namespace CHSR.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SessionExists(int id)
+        private bool SessionExists(string id)
         {
             return _context.Sessions.Any(e => e.id == id);
         }
