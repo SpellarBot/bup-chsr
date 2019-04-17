@@ -16,6 +16,8 @@ namespace CHSR.Models
 
         public DbSet<Institute> Institutes { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
+        public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<SubSpecialization> SubSpecializations { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<AdmissionApplication> AdmissionApplications { get; set; }
 
