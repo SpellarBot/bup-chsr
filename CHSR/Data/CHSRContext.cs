@@ -34,6 +34,10 @@ namespace CHSR.Models
                .WithOne(e => e.Faculty)
                .IsRequired();
 
+        modelBuilder.Entity<Specialization>()
+       .HasMany(c => c.SubSpecializations)
+       .WithOne(e => e.Specialization)
+       .IsRequired();
 
             modelBuilder.Entity<Institute>().HasData(new Institute { ID = 1, Name = "AIUB", Location = "KURIL" });
         }

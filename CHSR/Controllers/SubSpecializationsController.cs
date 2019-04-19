@@ -19,9 +19,9 @@ namespace CHSR.Controllers
         }
 
         // GET: SubSpecializations
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
-            return View(await _context.SubSpecializations.ToListAsync());
+            return View(await _context.SubSpecializations.Where(c=>c.Specialization.Id==id).ToListAsync());
         }
 
         // GET: SubSpecializations/Details/5
@@ -43,11 +43,11 @@ namespace CHSR.Controllers
         }
 
         // GET: SubSpecializations/Create
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(int ? id)
         {
-            List<Specialization> specializations = _context.Specializations.ToListAsync().Result;
-            ViewData["specializations"] = specializations;
-
+            var specialization = _context.Specializations.FindAsync(id).Result;
+            //List<Institute> institutes =  _context.Institutes.ToListAsync().Result;
+            ViewData["specialization"] = specialization;
             return View();
         }
 
@@ -56,16 +56,16 @@ namespace CHSR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] SubSpecialization subSpecialization,int SpecializationId)
+        public async Task<IActionResult> Create([Bind("Name")] SubSpecialization subSpecialization,int specializationID)
         {
             if (ModelState.IsValid)
             {
-                var specialization = _context.Specializations.FindAsync(SpecializationId).Result;
+                var specialization = _context.Specializations.FindAsync(specializationID).Result;
                 subSpecialization.Specialization = specialization;
 
                 _context.Add(subSpecialization);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),new { id=specializationID});
             }
             return View(subSpecialization);
         }
@@ -78,7 +78,9 @@ namespace CHSR.Controllers
                 return NotFound();
             }
 
-            var subSpecialization = await _context.SubSpecializations.FindAsync(id);
+            var subSpecialization = await _context.SubSpecializations.Where(c => c.Id == id).Include(c => c.Specialization).FirstOrDefaultAsync();
+            ViewData["subSpecialization"] = subSpecialization;
+
             if (subSpecialization == null)
             {
                 return NotFound();
@@ -91,7 +93,7 @@ namespace CHSR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] SubSpecialization subSpecialization)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] SubSpecialization subSpecialization, int specializationID)
         {
             if (id != subSpecialization.Id)
             {
@@ -116,7 +118,7 @@ namespace CHSR.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),new {id=specializationID });
             }
             return View(subSpecialization);
         }
@@ -129,8 +131,9 @@ namespace CHSR.Controllers
                 return NotFound();
             }
 
-            var subSpecialization = await _context.SubSpecializations
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var subSpecialization = await _context.SubSpecializations.Where(c => c.Id == id).Include(c => c.Specialization).FirstOrDefaultAsync();
+            ViewData["subSpecialization"] = subSpecialization;
+
             if (subSpecialization == null)
             {
                 return NotFound();
@@ -142,12 +145,12 @@ namespace CHSR.Controllers
         // POST: SubSpecializations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id,int specializationID)
         {
             var subSpecialization = await _context.SubSpecializations.FindAsync(id);
             _context.SubSpecializations.Remove(subSpecialization);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index),new { id=specializationID});
         }
 
         private bool SubSpecializationExists(int id)
