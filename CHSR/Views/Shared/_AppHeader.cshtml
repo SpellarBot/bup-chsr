@@ -1,0 +1,16 @@
+﻿<header class="app-header navbar">
+    <a asp-action="Index" asp-controller="Home">
+        <img style="height:50px;width:50px; margin-left:50px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBKz3izCmkLAteKwI4s65skagW1RFK6AzDx7AAATqT9iS2BDZA" />
+    </a>
+
+    @*<button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>*@
+
+
+    <ul class="nav navbar-nav ml-auto">
+        @await Html.PartialAsync("_UserNav")
+    </ul>
+
+    <!-- /remove:seed -->
+</header>

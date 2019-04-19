@@ -56,8 +56,8 @@ namespace CHSR
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, CHSRContext context)
         {
 
-            //context.Database.EnsureDeleted();
-            //context.Database.EnsureCreated();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
 
             if (env.IsDevelopment())
             {
@@ -74,6 +74,13 @@ namespace CHSR
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+Path.Combine(Directory.GetCurrentDirectory(), "node_modules")),
+                RequestPath = "/node_modules"
+            });
 
             app.UseAuthentication();
 
