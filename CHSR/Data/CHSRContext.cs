@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CHSR.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CHSR.Models
 {
-    public class CHSRContext : DbContext
+    public class CHSRContext : IdentityDbContext
     {
         public CHSRContext (DbContextOptions<CHSRContext> options)
             : base(options)
@@ -24,6 +25,8 @@ namespace CHSR.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Institute>()
                 .HasMany(c => c.Faculties)
                 .WithOne(e => e.Institute)
@@ -34,6 +37,10 @@ namespace CHSR.Models
                .WithOne(e => e.Faculty)
                .IsRequired();
 
+        modelBuilder.Entity<Specialization>()
+       .HasMany(c => c.SubSpecializations)
+       .WithOne(e => e.Specialization)
+       .IsRequired();
 
             modelBuilder.Entity<Institute>().HasData(new Institute { ID = 1, Name = "AIUB", Location = "KURIL" });
         }

@@ -1,7 +1,7 @@
 ﻿@model CHSR.Models.SubSpecialization
 
 @{
-    ViewData["Title"] = "Edit";
+    SubSpecialization subSpecialization = (SubSpecialization) ViewData["subSpecialization"];
 }
 
 <h1>Edit</h1>
@@ -13,9 +13,16 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+
+                Specialization Name : @subSpecialization.Specialization.Name
+            </div>
+
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
+                <input type="hidden" name="specializationID" value="@subSpecialization.Specialization.Id" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -26,6 +33,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    @*<a asp-action="Index">Back to List</a>*@
 </div>
 
