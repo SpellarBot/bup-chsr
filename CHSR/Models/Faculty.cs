@@ -11,10 +11,8 @@ namespace CHSR.Models
         public int ID { get; set; }
         public string Name { get; set; }
 
-        //public int InstituteID { get; set; }
-
-        //[ForeignKey("InstituteID")]
         public Institute Institute { get; set; }
 
+        public ICollection<Department> Departments { get; set; }
     }
 }

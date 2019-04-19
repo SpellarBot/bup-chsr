@@ -16,6 +16,7 @@ namespace CHSR.Models
 
         public DbSet<Institute> Institutes { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
+        public DbSet<Department> Departments { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<SubSpecialization> SubSpecializations { get; set; }
         public DbSet<Session> Sessions { get; set; }
@@ -27,6 +28,11 @@ namespace CHSR.Models
                 .HasMany(c => c.Faculties)
                 .WithOne(e => e.Institute)
                 .IsRequired();
+
+         modelBuilder.Entity<Faculty>()
+               .HasMany(c => c.Departments)
+               .WithOne(e => e.Faculty)
+               .IsRequired();
 
 
             modelBuilder.Entity<Institute>().HasData(new Institute { ID = 1, Name = "AIUB", Location = "KURIL" });

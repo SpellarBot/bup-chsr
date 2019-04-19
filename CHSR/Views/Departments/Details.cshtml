@@ -1,20 +1,13 @@
-﻿@model CHSR.Models.Faculty
+﻿@model CHSR.Models.Department
 
 @{
-    
+    ViewData["Title"] = "Details";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
+<h1>Details</h1>
 
 <div>
-    <h4>Faculty</h4>
+    <h4>Department</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -26,8 +19,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
     @*<a asp-action="Index">Back to List</a>*@
 </div>
-</body>
-</html>

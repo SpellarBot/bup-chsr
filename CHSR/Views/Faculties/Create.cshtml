@@ -2,7 +2,11 @@
 
 
 @{
-    List<Institute> ins = (List<Institute>)ViewData["ins"];
+    //List<Institute> ins = (List<Institute>)ViewData["ins"];
+    Institute institute = (Institute)ViewData["ins"];
+    //TempData["Data1"] = institute.ID;
+
+   // Model.Institute = institute;
 }
 
 <!DOCTYPE html>
@@ -20,15 +24,22 @@
         <div class="col-md-4">
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
                 <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    Add Faculty under @institute.Name
                 </div>
 
                 <div class="form-group">
-                    @Html.DropDownList("instituteID", new SelectList(ins, "ID", "Name"))
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <input type="hidden" name="instituteID" value="@institute.ID" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
+
+
+
+
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
@@ -37,7 +48,7 @@
     </div>
 
     <div>
-        <a asp-action="Index">Back to List</a>
+        @*<a asp-action="Index"  >Back to List</a>*@
     </div>
 
 </body>
