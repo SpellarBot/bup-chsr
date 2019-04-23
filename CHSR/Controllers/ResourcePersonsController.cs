@@ -47,8 +47,10 @@ namespace CHSR.Controllers
         {
             //var institutes = await _context.Institutes.ToListAsync();
             List<Institute> institutes = _context.Institutes.ToListAsync().Result;
-            ViewData["institutes"] = institutes;
+            List<Specialization> specializations = _context.Specializations.ToListAsync().Result;
 
+            ViewData["institutes"] = institutes;
+            ViewData["specializations"] = specializations;
             return View();
         }
 
@@ -61,6 +63,9 @@ namespace CHSR.Controllers
         {
             if (ModelState.IsValid)
             {
+                var institute = _context.Institutes.FindAsync(resourcePerson.Institute).Result;
+                resourcePerson.Institute = institute.Name;
+
                 _context.Add(resourcePerson);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

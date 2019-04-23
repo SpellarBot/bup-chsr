@@ -17,7 +17,10 @@ namespace CHSR.Controllers
         {
             _context = context;
         }
-
+        public async Task<IActionResult> GetSubSpecializations(int id)
+        {
+            return Json(await _context.SubSpecializations.Where(c => c.Specialization.Id == id).ToListAsync());
+        }
         // GET: SubSpecializations
         public async Task<IActionResult> Index(int id)
         {

@@ -18,6 +18,15 @@ namespace CHSR.Controllers
             _context = context;
         }
 
+
+
+
+        public async Task<IActionResult> GetFaculties(int id)
+        {
+          
+            return Json(await _context.Faculties.Where(x => x.Institute.ID == id).ToListAsync());
+        }
+
         // GET: Faculties
         public async Task<IActionResult> Index(int id)
         {
