@@ -5,4 +5,20 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    
+    <select id="theid">
+        <option value="1">a</option>
+        <option value="2">b</option>
+        <option value="3">c</option>
+    </select>
 </div>
+
+
+
+<script>
+$(document).ready(function(){
+  $("#theid").change(function(){
+    alert("The text has been changed.");
+  });
+});
+</script>

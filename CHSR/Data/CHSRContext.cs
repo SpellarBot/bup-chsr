@@ -46,5 +46,7 @@ namespace CHSR.Models
         }
 
         public DbSet<CHSR.Models.Session> Session { get; set; }
+
+        public DbSet<CHSR.Models.ResourcePerson> ResourcePerson { get; set; }
     }
 }
