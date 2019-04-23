@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -116,5 +117,10 @@ namespace CHSR.Models
 
         public string TraceId { get; set; }
         public bool IsDraft { get; set; }
+
+        public List<string> ApplicationAttachmentIds { get; set; }
+
+        [NotMapped]
+        public List<IFormFile> ApplicationAttachments { get; set; }
     }
 }

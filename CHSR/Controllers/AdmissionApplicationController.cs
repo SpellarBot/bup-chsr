@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CHSR.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -80,6 +81,22 @@ namespace CHSR.Controllers
                 {
                     await admissionApplication.ProfilePicture.CopyToAsync(stream);
                     admissionApplication.ProfilePictureId = admissionApplication.ProfilePicture.FileName;
+                }
+            }
+
+            
+
+            if (admissionApplication.ApplicationAttachments != null || admissionApplication.ApplicationAttachments.Count > 0)
+            {
+                foreach (IFormFile attachment in admissionApplication.ApplicationAttachments)
+                {
+                    var applicationAttachmentPath = Path.Combine(rootPath, attachment.FileName);
+
+                    using (var stream = new FileStream(applicationAttachmentPath, FileMode.Create))
+                    {
+                        await attachment.CopyToAsync(stream);
+                        admissionApplication.ApplicationAttachmentIds.Add(attachment.FileName);
+                    }
                 }
             }
 
