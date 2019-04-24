@@ -16,11 +16,22 @@ namespace CHSR.Models
         [Required]
         [Display(Name = "Program")]
         public string ProgramName { get; set; }
+
+        [Display(Name = "Candidate Name in Bangla")]
         public string CandidateNameBangla { get; set; }
 
+        [Required]
+        [Display(Name = "Candidate Name in English")]
         public string CandidateNameEnglish { get; set; }
 
+        //TODO: Uncomment
+        //[Required]
+        [Display(Name = "Father's Name")]
         public string FatherName { get; set; }
+
+        //TODO: Uncomment
+        //[Required]
+        [Display(Name = "Mother's Name")]
         public string MotherName { get; set; }
         public string SpouseName { get; set; }
         public string PermanentAddress { get; set; }

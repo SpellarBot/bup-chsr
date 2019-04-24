@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CHSR.Models;
+using CHSR.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,9 +14,11 @@ namespace CHSR.Controllers
     public class AdmissionApplicationController : Controller
     {
         private readonly CHSRContext _context;
-        public AdmissionApplicationController(CHSRContext context)
+        private readonly FileUploaderService _fileUploaderService;
+        public AdmissionApplicationController(CHSRContext context, FileUploaderService fileUploaderService)
         {
             _context = context;
+            _fileUploaderService = fileUploaderService;
         }
 
         public IActionResult Index()
@@ -27,22 +30,6 @@ namespace CHSR.Controllers
         [HttpGet]
         public IActionResult Registration()
         {
-            var programs = new List<SelectListItem>
-            {
-                new SelectListItem
-                {
-                    Text = "PhD",
-                    Value = "phd"
-                },
-                new SelectListItem
-                {
-                    Text = "MPhil",
-                    Value = "mphil"
-                }
-            };
-
-            ViewData["ProgramList"] = programs;
-
             var countries = new List<SelectListItem>
             {
                 new SelectListItem
@@ -73,6 +60,9 @@ namespace CHSR.Controllers
             {
                 Directory.CreateDirectory(rootPath);
             }
+
+            _fileUploaderService.UploadFile(admissionApplication.ProfilePicture, rootPath);
+            admissionApplication.ProfilePictureId = admissionApplication.ProfilePicture.FileName;
 
             if (admissionApplication.ProfilePicture != null || admissionApplication.ProfilePicture.Length > 0)
             {

@@ -1,5 +1,4 @@
-﻿
-@model AdmissionApplication
+﻿@model AdmissionApplication
 
 @{
     ViewData["Title"] = "Registration";
@@ -8,39 +7,44 @@
 <h1>Registration</h1>
 
 <form asp-action="Registration" asp-controller="AdmissionApplication" enctype="multipart/form-data">
-
-
+    @*<div class="form-group">
+                <select name="FileCategory">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" asp-for="ApplicationAttachmentFiles" class="custom-file-input" id="inputGroupFile02" aria-describedby="inputGroupFileAddon02" accept="pdf">
+                    <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                </div>
+            </div>
+        <br /><br /><br />
+    *@
     <div class="form-group">
-        <select name="FileCategory">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-        </select>    
-    </div>
-    <div class="input-group">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
-        </div>
-        <div class="custom-file">
-            <input type="file" asp-for="ApplicationAttachmentFiles" class="custom-file-input" id="inputGroupFile02" aria-describedby="inputGroupFileAddon02" accept="pdf">
-            <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
-        </div>
-    </div>
-    <br/><br /><br />
-    <div class="input-group">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-        </div>
-        <div class="custom-file">
-            <input type="file" asp-for="ProfilePicture" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+        <label asp-for="ProfilePicture"></label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+            </div>
+            <div class="custom-file">
+                <input type="file" asp-for="ProfilePicture" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div>
         </div>
     </div>
 
     <div class="form-group">
         <label asp-for="ProgramName"></label>
-        <select class="form-control" asp-for="ProgramName" asp-items="@ViewData["ProgramList"] as List<SelectListItem>"></select>
+        <select class="form-control" asp-for="ProgramName">
+            <option value="phd">PhD</option>
+            <option value="mphil">MPhil</option>
+        </select>
     </div>
 
     <div class="form-group">
