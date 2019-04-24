@@ -22,6 +22,7 @@ namespace CHSR.Models
         public DbSet<SubSpecialization> SubSpecializations { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<AdmissionApplication> AdmissionApplications { get; set; }
+        public DbSet<ApplicationAttachment> ApplicationAttachments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

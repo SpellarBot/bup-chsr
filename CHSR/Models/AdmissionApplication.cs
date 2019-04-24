@@ -8,6 +8,10 @@ namespace CHSR.Models
 {
     public class AdmissionApplication : Entity
     {
+        public AdmissionApplication()
+        {
+            ApplicationAttachments = new List<ApplicationAttachment>();
+        }
 
         [Required]
         [Display(Name = "Program")]
@@ -118,9 +122,9 @@ namespace CHSR.Models
         public string TraceId { get; set; }
         public bool IsDraft { get; set; }
 
-        public List<string> ApplicationAttachmentIds { get; set; }
+        public List<ApplicationAttachment> ApplicationAttachments { get; set; }
 
         [NotMapped]
-        public List<IFormFile> ApplicationAttachments { get; set; }
+        public List<IFormFile> ApplicationAttachmentFiles { get; set; }
     }
 }

@@ -66,6 +66,7 @@ namespace CHSR.Controllers
         public async Task<IActionResult> Registration(AdmissionApplication admissionApplication)
         {
             var traceId = Guid.NewGuid().ToString();
+            var fileCategory = Request.Form["FileCategory"];
             var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents", traceId);
 
             if (!Directory.Exists(rootPath))
@@ -86,18 +87,19 @@ namespace CHSR.Controllers
 
             
 
-            if (admissionApplication.ApplicationAttachments != null || admissionApplication.ApplicationAttachments.Count > 0)
+            if (admissionApplication.ApplicationAttachmentFiles != null || admissionApplication.ApplicationAttachmentFiles.Count > 0)
             {
-                foreach (IFormFile attachment in admissionApplication.ApplicationAttachments)
+                foreach (IFormFile attachment in admissionApplication.ApplicationAttachmentFiles)
                 {
                     var applicationAttachmentPath = Path.Combine(rootPath, attachment.FileName);
 
                     using (var stream = new FileStream(applicationAttachmentPath, FileMode.Create))
                     {
                         await attachment.CopyToAsync(stream);
-                        admissionApplication.ApplicationAttachmentIds.Add(attachment.FileName);
+                        admissionApplication.ApplicationAttachments.Add(new ApplicationAttachment { FileName = fileCategory, FileCategory = fileCategory, AdmissionApplication = admissionApplication });
                     }
                 }
+                //var applicationAttachmentPath = Path.Combine(rootPath, admissionApplication.ApplicationAttachmentFiles.FileName);
             }
 
             admissionApplication.IsDraft = true;
