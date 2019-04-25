@@ -190,7 +190,7 @@ namespace CHSR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization,Photo")] ResourcePerson resourcePerson)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization,Photo")] ResourcePerson resourcePerson, string pid)
         {
             if (id != resourcePerson.Id)
             {
@@ -200,8 +200,11 @@ namespace CHSR.Controllers
             if (ModelState.IsValid)
             {
 
-                var traceId = Guid.NewGuid().ToString();
-                var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents\\ResourcePerson", traceId);
+                //var traceId = Guid.NewGuid().ToString();
+
+               // var temp = await _context.ResourcePerson.FindAsync(id);
+
+                var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents\\ResourcePerson", pid);
 
                 if (!Directory.Exists(rootPath))
                 {
@@ -209,7 +212,7 @@ namespace CHSR.Controllers
                 }
 
                 _fileUploaderService.UploadFile(resourcePerson.Photo, rootPath);
-                resourcePerson.PicFolderId = traceId;
+                resourcePerson.PicFolderId = pid;
                 resourcePerson.PhotoFileName = resourcePerson.Photo.FileName;
 
 
