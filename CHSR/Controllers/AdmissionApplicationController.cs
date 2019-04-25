@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CHSR.Models;
+using CHSR.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,9 +14,11 @@ namespace CHSR.Controllers
     public class AdmissionApplicationController : Controller
     {
         private readonly CHSRContext _context;
-        public AdmissionApplicationController(CHSRContext context)
+        private readonly FileUploaderService _fileUploaderService;
+        public AdmissionApplicationController(CHSRContext context, FileUploaderService fileUploaderService)
         {
             _context = context;
+            _fileUploaderService = fileUploaderService;
         }
 
         public IActionResult Index()
@@ -27,22 +30,6 @@ namespace CHSR.Controllers
         [HttpGet]
         public IActionResult Registration()
         {
-            var programs = new List<SelectListItem>
-            {
-                new SelectListItem
-                {
-                    Text = "PhD",
-                    Value = "phd"
-                },
-                new SelectListItem
-                {
-                    Text = "MPhil",
-                    Value = "mphil"
-                }
-            };
-
-            ViewData["ProgramList"] = programs;
-
             var countries = new List<SelectListItem>
             {
                 new SelectListItem
@@ -66,12 +53,16 @@ namespace CHSR.Controllers
         public async Task<IActionResult> Registration(AdmissionApplication admissionApplication)
         {
             var traceId = Guid.NewGuid().ToString();
+            var fileCategory = Request.Form["FileCategory"];
             var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents", traceId);
 
             if (!Directory.Exists(rootPath))
             {
                 Directory.CreateDirectory(rootPath);
             }
+
+            _fileUploaderService.UploadFile(admissionApplication.ProfilePicture, rootPath);
+            admissionApplication.ProfilePictureId = admissionApplication.ProfilePicture.FileName;
 
             if (admissionApplication.ProfilePicture != null || admissionApplication.ProfilePicture.Length > 0)
             {
@@ -86,18 +77,19 @@ namespace CHSR.Controllers
 
             
 
-            if (admissionApplication.ApplicationAttachments != null || admissionApplication.ApplicationAttachments.Count > 0)
+            if (admissionApplication.ApplicationAttachmentFiles != null || admissionApplication.ApplicationAttachmentFiles.Count > 0)
             {
-                foreach (IFormFile attachment in admissionApplication.ApplicationAttachments)
+                foreach (IFormFile attachment in admissionApplication.ApplicationAttachmentFiles)
                 {
                     var applicationAttachmentPath = Path.Combine(rootPath, attachment.FileName);
 
                     using (var stream = new FileStream(applicationAttachmentPath, FileMode.Create))
                     {
                         await attachment.CopyToAsync(stream);
-                        admissionApplication.ApplicationAttachmentIds.Add(attachment.FileName);
+                        admissionApplication.ApplicationAttachments.Add(new ApplicationAttachment { FileName = fileCategory, FileCategory = fileCategory, AdmissionApplication = admissionApplication });
                     }
                 }
+                //var applicationAttachmentPath = Path.Combine(rootPath, admissionApplication.ApplicationAttachmentFiles.FileName);
             }
 
             admissionApplication.IsDraft = true;

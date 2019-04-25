@@ -8,15 +8,30 @@ namespace CHSR.Models
 {
     public class AdmissionApplication : Entity
     {
+        public AdmissionApplication()
+        {
+            ApplicationAttachments = new List<ApplicationAttachment>();
+        }
 
         [Required]
         [Display(Name = "Program")]
         public string ProgramName { get; set; }
+
+        [Display(Name = "Candidate Name in Bangla")]
         public string CandidateNameBangla { get; set; }
 
+        [Required]
+        [Display(Name = "Candidate Name in English")]
         public string CandidateNameEnglish { get; set; }
 
+        //TODO: Uncomment
+        //[Required]
+        [Display(Name = "Father's Name")]
         public string FatherName { get; set; }
+
+        //TODO: Uncomment
+        //[Required]
+        [Display(Name = "Mother's Name")]
         public string MotherName { get; set; }
         public string SpouseName { get; set; }
         public string PermanentAddress { get; set; }
@@ -117,10 +132,10 @@ namespace CHSR.Models
 
         public string TraceId { get; set; }
         public bool IsDraft { get; set; }
-        [NotMapped]
-        public List<string> ApplicationAttachmentIds { get; set; }
+
+        public List<ApplicationAttachment> ApplicationAttachments { get; set; }
 
         [NotMapped]
-        public List<IFormFile> ApplicationAttachments { get; set; }
+        public List<IFormFile> ApplicationAttachmentFiles { get; set; }
     }
 }
