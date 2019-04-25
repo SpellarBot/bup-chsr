@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CHSR.Models;
+using System.IO;
 
 namespace CHSR.Controllers
 {
@@ -21,7 +22,49 @@ namespace CHSR.Controllers
         // GET: ResourcePersons
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ResourcePerson.ToListAsync());
+            List<Task> tasks = new List<Task>();
+            Task<List<ResourcePerson>> resourcePerson = _context.ResourcePerson.ToListAsync();
+            Task<List<Institute>> institutes= _context.Institutes.ToListAsync();
+            Task<List<Faculty>> faculties = _context.Faculties.ToListAsync();
+            Task<List<Department>> departments = _context.Departments.ToListAsync();
+            Task<List<Specialization>> specializations = _context.Specializations.ToListAsync();
+            Task<List<SubSpecialization>> subSpecializations = _context.SubSpecializations.ToListAsync();
+
+            tasks.Add(resourcePerson);
+            tasks.Add(institutes);
+            tasks.Add(faculties);
+            tasks.Add(departments);
+            tasks.Add(specializations);
+            tasks.Add(subSpecializations);
+
+            Task.WaitAll(tasks.ToArray());
+
+            foreach (var rp in resourcePerson.Result)
+            {
+                var institute = institutes.Result.Find(x => x.ID.ToString() == rp.Institute);
+                if (institute != null)
+                    rp.Institute = institute.Name;
+
+                var faculty = faculties.Result.Find(x => x.ID.ToString() == rp.Faculty);
+                if (faculty != null)
+                    rp.Faculty = faculty.Name;
+
+                var department = departments.Result.Find(x => x.id.ToString() == rp.Department);
+                if (department != null)
+                    rp.Department = department.Name;
+
+                var specialization = specializations.Result.Find(x => x.Id.ToString() == rp.Specialization);
+                if (specialization != null)
+                    rp.Specialization = specialization.Name;
+
+                var subSpecialization = subSpecializations.Result.Find(x => x.Id.ToString() == rp.SubSpecialization);
+                if (subSpecialization != null)
+                    rp.SubSpecialization = subSpecialization.Name;
+
+            }
+
+
+            return View(resourcePerson.Result);
         }
 
         // GET: ResourcePersons/Details/5
@@ -34,6 +77,27 @@ namespace CHSR.Controllers
 
             var resourcePerson = await _context.ResourcePerson
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            var institute = await _context.Institutes
+                .FirstOrDefaultAsync(m => m.ID == id);
+
+            var faculty = await _context.Faculties
+                .FirstOrDefaultAsync(m => m.ID == id);
+
+            var department = await _context.Departments
+                .FirstOrDefaultAsync(m => m.id == id);
+            var specialization = await _context.Specializations
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            var subSpecialization = await _context.SubSpecializations
+               .FirstOrDefaultAsync(m => m.Id == id);
+
+            resourcePerson.Institute = institute.Name;
+            resourcePerson.Faculty = faculty.Name;
+            resourcePerson.Department = department.Name;
+            resourcePerson.Specialization = specialization.Name;
+            resourcePerson.SubSpecialization = subSpecialization.Name;
+
             if (resourcePerson == null)
             {
                 return NotFound();
@@ -59,12 +123,33 @@ namespace CHSR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization")] ResourcePerson resourcePerson)
+        public async Task<IActionResult> Create([Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization,Photo,PhotoId")] ResourcePerson resourcePerson)
         {
             if (ModelState.IsValid)
             {
-                var institute = _context.Institutes.FindAsync(resourcePerson.Institute).Result;
-                resourcePerson.Institute = institute.Name;
+
+                var traceId = Guid.NewGuid().ToString();
+                var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents\\ResourcePerson", traceId);
+
+                if (!Directory.Exists(rootPath))
+                {
+                    Directory.CreateDirectory(rootPath);
+                }
+
+                if (resourcePerson.Photo != null || resourcePerson.Photo.Length > 0)
+                {
+                    var profilePicturePath = Path.Combine(rootPath, resourcePerson.Photo.FileName);
+
+                    using (var stream = new FileStream(profilePicturePath, FileMode.Create))
+                    {
+                        await resourcePerson.Photo.CopyToAsync(stream);
+                        resourcePerson.PhotoId = resourcePerson.Photo.FileName;
+                    }
+                }
+
+
+
+
 
                 _context.Add(resourcePerson);
                 await _context.SaveChangesAsync();

@@ -117,7 +117,7 @@ namespace CHSR.Models
 
         public string TraceId { get; set; }
         public bool IsDraft { get; set; }
-
+        [NotMapped]
         public List<string> ApplicationAttachmentIds { get; set; }
 
         [NotMapped]

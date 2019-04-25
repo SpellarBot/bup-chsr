@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
-     List<Institute> institutes = (List<Institute>)ViewData["institutes"];
+    List<Institute> institutes = (List<Institute>)ViewData["institutes"];
     List<Specialization> specializations = (List<Specialization>)ViewData["specializations"];
 }
 
@@ -12,7 +12,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -20,14 +20,25 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                @Html.DropDownList("Institute", new SelectList(institutes, "ID", "Name"))
+                @Html.DropDownList("Institute", new SelectList(institutes, "ID", "Name"), optionLabel: "Select Institute")
             </div>
             <div class="form-group" id="FacultyID">
                 @*@Html.DropDownList("FacultyID", new SelectList(, "ID", "Name"))*@
             </div>
             <div class="form-group" id="DepartmentID">
-           
+
             </div>
+
+            @*<div class="col-md-10">
+                <p>Upload your photo here:</p>
+                <input type="file" asp-for="Photo">
+            </div>*@
+
+            <div class="custom-file">
+                <input type="file" asp-for="Photo" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Designation" class="control-label"></label>
                 <input asp-for="Designation" class="form-control" />
@@ -44,10 +55,10 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                @Html.DropDownList("Specialization", new SelectList(specializations, "Id", "Name"))
+                @Html.DropDownList("Specialization", new SelectList(specializations, "Id", "Name"), optionLabel: "Select Specialization")
             </div>
             <div class="form-group" id="SubID">
-                
+
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -67,7 +78,7 @@ $(document).ready(function(){
       var temp = $(this).val();
       		$.ajax('/Faculties/GetFaculties/'+temp)
                     .done(function (response) {
-                var listItems= "";
+                var listItems= "<option >Select Faculty</option>";
                 console.log(response);
 
                 for (var i = 0; i < response.length; i++){
@@ -85,7 +96,7 @@ $(document).ready(function(){
             var temp = $(this).val();
       		$.ajax('/Departments/GetDepartments/'+temp)
                     .done(function (response) {
-                var listItems= "";
+                var listItems= "<option >Select Department</option>";
                 console.log(response);
 
                 for (var i = 0; i < response.length; i++){
@@ -103,13 +114,13 @@ $(document).ready(function(){
       var temp = $(this).val();
       		$.ajax('/SubSpecializations/GetSubSpecializations/'+temp)
                     .done(function (response) {
-                var listItems= "";
+                var listItems= "<option >Select Sub Specialization</option>";
                 console.log(response);
 
                 for (var i = 0; i < response.length; i++){
                     listItems+= "<option value='" + response[i].id + "'>" + response[i].name + "</option>";
-                    }
-                $("#SubID").html("<Select name=subspecialization>"+listItems+"</Select>");
+                        }
+                        $("#SubID").html("<Select name=subspecialization>" + listItems + "</Select>");
                 
 
 			});
