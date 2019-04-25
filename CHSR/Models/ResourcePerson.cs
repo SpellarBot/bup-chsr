@@ -17,12 +17,13 @@ namespace CHSR.Models
 
         [NotMapped]
         public IFormFile Photo { get; set; }
-        public  string PhotoId { get; set; }
+        public  string PicFolderId { get; set; }
 
         public string Designation { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Specialization { get; set; }
         public string SubSpecialization { get; set; }
+        public string PhotoFileName { get; internal set; }
     }
 }
