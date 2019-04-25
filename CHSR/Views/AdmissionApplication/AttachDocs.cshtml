@@ -10,24 +10,34 @@
 <form asp-action="RegistrationDocs" asp-controller="AdmissionApplication" enctype="multipart/form-data">
     <input type="hidden" value="@applicationTraceId" name="applicationTraceId"/>
     <div class="attachDocFields">
-        <div class="attachDocFieldsGroup">
-            <div class="form-group col-md-12">
-                <select name="FileCategory">
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="mercedes">Mercedes</option>
-                    <option value="audi">Audi</option>
+        <div class="attachDocFieldsGroup row">
+            <div class="form-group col-md-2" style="height: 39px; padding-right: 0;">
+                <select name="FileCategory" style="width: 100%; height: 35px;">
+                    <option value="Approval letter">Approval letter</option>
+                    <option value="Passport size photo">Passport size photo</option>
+                    <option value="All academic marksheets/transcripts">All academic marksheets/transcripts</option>
+                    <option value="Certificate">Certificate</option>
+                    <option value="EvidenceLetter">EvidenceLetter</option>
+                    <option value="Certificate of related research_work/teaching/other service">Certificate of related research_work/teaching/other service</option>
+                    <option value="Published Article">Published Article</option>
+                    <option value="Migration certificate">Migration certificate</option>
+                    <option value="Synopsis on the title research">Synopsis on the title research</option>
+                    <option value="Bank deposit slip">Bank deposit slip</option>
+                    <option value="Work permit with visa">Work permit with visa</option>
                 </select>
             </div>
-            <div class="input-group col-md-12">
-                <div class="input-group-prepend">
+            <div class="input-group col-md-9">
+                <div class="input-group-prepend" style="line-height: 1; display: inline-block;">
                     <span class="input-group-text">Upload</span>
                 </div>
-                <div class="custom-file col-md-9">
+                <div class="custom-file">
                     <input type="file" asp-for="ApplicationAttachmentFiles" class="custom-file-input" aria-describedby="inputGroupFileAddon02" accept="pdf">
                     <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
                 </div>
             </div>
+            <button type="button" class="close col-md-1 deleteBtn" aria-label="Close" style="background: red; color: white; height: 35px;">
+                <span aria-hidden="true">&times;</span>
+            </button>
             <br />
         </div>
     </div>
@@ -41,4 +51,12 @@
     $(".addBtn").click(function(){
         $(".attachDocFieldsGroup:first").clone().appendTo(".attachDocFields");
     });
+    $(document).on('click', 'button.deleteBtn', function () {
+        // Gets the number of elements with class yourClass
+        var numItems = $('.attachDocFieldsGroup').length;
+        if (numItems > 1) {
+            $(this).closest('.attachDocFieldsGroup').remove();
+        }
+         return false;
+     });
 </script>
