@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CHSR.Models;
 using CHSR.Service;
+using CHSR.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -53,7 +54,6 @@ namespace CHSR.Controllers
         public async Task<IActionResult> Registration(AdmissionApplication admissionApplication)
         {
             var traceId = Guid.NewGuid().ToString();
-            var fileCategory = Request.Form["FileCategory"];
             var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents", traceId);
 
             if (!Directory.Exists(rootPath))
@@ -61,42 +61,62 @@ namespace CHSR.Controllers
                 Directory.CreateDirectory(rootPath);
             }
 
-            _fileUploaderService.UploadFile(admissionApplication.ProfilePicture, rootPath);
-            admissionApplication.ProfilePictureId = admissionApplication.ProfilePicture.FileName;
+            //_fileUploaderService.UploadFile(admissionApplication.ProfilePicture, rootPath);
+            //admissionApplication.ProfilePictureId = admissionApplication.ProfilePicture.FileName;
 
-            if (admissionApplication.ProfilePicture != null || admissionApplication.ProfilePicture.Length > 0)
-            {
-                var profilePicturePath = Path.Combine(rootPath, admissionApplication.ProfilePicture.FileName);
+            //if (admissionApplication.ProfilePicture != null || admissionApplication.ProfilePicture.Length > 0)
+            //{
+            //    var profilePicturePath = Path.Combine(rootPath, admissionApplication.ProfilePicture.FileName);
 
-                using (var stream = new FileStream(profilePicturePath, FileMode.Create))
-                {
-                    await admissionApplication.ProfilePicture.CopyToAsync(stream);
-                    admissionApplication.ProfilePictureId = admissionApplication.ProfilePicture.FileName;
-                }
-            }
+            //    using (var stream = new FileStream(profilePicturePath, FileMode.Create))
+            //    {
+            //        await admissionApplication.ProfilePicture.CopyToAsync(stream);
+            //        admissionApplication.ProfilePictureId = admissionApplication.ProfilePicture.FileName;
+            //    }
+            //}
 
-            
-
-            if (admissionApplication.ApplicationAttachmentFiles != null || admissionApplication.ApplicationAttachmentFiles.Count > 0)
-            {
-                foreach (IFormFile attachment in admissionApplication.ApplicationAttachmentFiles)
-                {
-                    var applicationAttachmentPath = Path.Combine(rootPath, attachment.FileName);
-
-                    using (var stream = new FileStream(applicationAttachmentPath, FileMode.Create))
-                    {
-                        await attachment.CopyToAsync(stream);
-                        admissionApplication.ApplicationAttachments.Add(new ApplicationAttachment { FileName = fileCategory, FileCategory = fileCategory, AdmissionApplication = admissionApplication });
-                    }
-                }
-                //var applicationAttachmentPath = Path.Combine(rootPath, admissionApplication.ApplicationAttachmentFiles.FileName);
-            }
 
             admissionApplication.IsDraft = true;
             admissionApplication.TraceId = traceId;
             await _context.AdmissionApplications.AddAsync(admissionApplication);
             await _context.SaveChangesAsync();
+            
+
+            return RedirectToAction("AttachDocs",new { applicationTraceId = traceId });
+        }
+
+        [HttpGet]
+        public IActionResult AttachDocs(string applicationTraceId)
+        {
+            ViewData["applicationTraceId"] = applicationTraceId;
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RegistrationDocs(AttachmentViewModel attachmentViewModel, string applicationTraceId)
+        {
+            var fileCategory = Request.Form["FileCategory"];
+            var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents", applicationTraceId);
+
+            if (!Directory.Exists(rootPath))
+            {
+                Directory.CreateDirectory(rootPath);
+            }
+
+            
+
+            var admissionApplication = _context.AdmissionApplications.Where(p => p.TraceId == applicationTraceId).Single();
+            int i = 0;
+            foreach (var attachment in attachmentViewModel.ApplicationAttachmentFiles)
+            {
+                _fileUploaderService.UploadFile(attachment, rootPath);
+                admissionApplication.ApplicationAttachments.Add(new ApplicationAttachment { FileName = attachment.FileName, FileCategory = fileCategory[i], AdmissionApplication = admissionApplication });
+                i++;
+            }
+            _context.Update(admissionApplication);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("AttachDocs", new { applicationTraceId = applicationTraceId });
         }
 
         [HttpGet]
