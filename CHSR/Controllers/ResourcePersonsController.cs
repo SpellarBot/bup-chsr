@@ -7,16 +7,18 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CHSR.Models;
 using System.IO;
-
+using CHSR.Service;
 namespace CHSR.Controllers
 {
     public class ResourcePersonsController : Controller
     {
         private readonly CHSRContext _context;
+        private readonly FileUploaderService _fileUploaderService;
 
-        public ResourcePersonsController(CHSRContext context)
+        public ResourcePersonsController(CHSRContext context, FileUploaderService fileUploaderService)
         {
             _context = context;
+            _fileUploaderService = fileUploaderService;
         }
 
         // GET: ResourcePersons
@@ -79,24 +81,24 @@ namespace CHSR.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             var institute = await _context.Institutes
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.ID.ToString() == resourcePerson.Institute);
 
             var faculty = await _context.Faculties
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.ID.ToString() == resourcePerson.Faculty);
 
             var department = await _context.Departments
-                .FirstOrDefaultAsync(m => m.id == id);
+                .FirstOrDefaultAsync(m => m.id.ToString() == resourcePerson.Department);
             var specialization = await _context.Specializations
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id.ToString() == resourcePerson.Specialization);
 
             var subSpecialization = await _context.SubSpecializations
-               .FirstOrDefaultAsync(m => m.Id == id);
+               .FirstOrDefaultAsync(m => m.Id.ToString() == resourcePerson.SubSpecialization);
 
-            resourcePerson.Institute = institute.Name;
-            resourcePerson.Faculty = faculty.Name;
-            resourcePerson.Department = department.Name;
-            resourcePerson.Specialization = specialization.Name;
-            resourcePerson.SubSpecialization = subSpecialization.Name;
+            resourcePerson.Institute = institute == null ? "" : institute.Name;
+            resourcePerson.Faculty = faculty == null ? "" : faculty.Name;
+            resourcePerson.Department = department == null ? "" : department.Name;
+            resourcePerson.Specialization = specialization == null ? "" : specialization.Name;
+            resourcePerson.SubSpecialization = subSpecialization == null ? "" : subSpecialization.Name;
 
             if (resourcePerson == null)
             {
@@ -123,7 +125,7 @@ namespace CHSR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization,Photo,PhotoId")] ResourcePerson resourcePerson)
+        public async Task<IActionResult> Create([Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization,Photo")] ResourcePerson resourcePerson)
         {
             if (ModelState.IsValid)
             {
@@ -136,16 +138,10 @@ namespace CHSR.Controllers
                     Directory.CreateDirectory(rootPath);
                 }
 
-                if (resourcePerson.Photo != null || resourcePerson.Photo.Length > 0)
-                {
-                    var profilePicturePath = Path.Combine(rootPath, resourcePerson.Photo.FileName);
+                _fileUploaderService.UploadFile(resourcePerson.Photo, rootPath);
+                resourcePerson.PicFolderId = traceId;
+                resourcePerson.PhotoFileName = resourcePerson.Photo.FileName;
 
-                    using (var stream = new FileStream(profilePicturePath, FileMode.Create))
-                    {
-                        await resourcePerson.Photo.CopyToAsync(stream);
-                        resourcePerson.PhotoId = resourcePerson.Photo.FileName;
-                    }
-                }
 
 
 
@@ -167,6 +163,21 @@ namespace CHSR.Controllers
             }
 
             var resourcePerson = await _context.ResourcePerson.FindAsync(id);
+
+            List<Institute> institutes = _context.Institutes.ToListAsync().Result;
+            List<Faculty> faculties = await _context.Faculties.Where(x => x.Institute.ID.ToString() == resourcePerson.Institute).ToListAsync();
+            List<Department> departments = await _context.Departments.Where(x => x.Faculty.ID.ToString() == resourcePerson.Faculty).ToListAsync();
+
+            List<Specialization> specializations = _context.Specializations.ToListAsync().Result;
+            List<SubSpecialization> subSpecializations = await _context.SubSpecializations.Where(x => x.Specialization.Id.ToString() == resourcePerson.Specialization).ToListAsync();
+
+            ViewData["institutes"] = institutes;
+            ViewData["faculties"] = faculties;
+            ViewData["departments"] = departments;
+            ViewData["specializations"] = specializations;
+            ViewData["subSpecializations"] = subSpecializations;
+
+
             if (resourcePerson == null)
             {
                 return NotFound();
@@ -179,7 +190,7 @@ namespace CHSR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization")] ResourcePerson resourcePerson)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization,Photo")] ResourcePerson resourcePerson)
         {
             if (id != resourcePerson.Id)
             {
@@ -188,6 +199,20 @@ namespace CHSR.Controllers
 
             if (ModelState.IsValid)
             {
+
+                var traceId = Guid.NewGuid().ToString();
+                var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents\\ResourcePerson", traceId);
+
+                if (!Directory.Exists(rootPath))
+                {
+                    Directory.CreateDirectory(rootPath);
+                }
+
+                _fileUploaderService.UploadFile(resourcePerson.Photo, rootPath);
+                resourcePerson.PicFolderId = traceId;
+                resourcePerson.PhotoFileName = resourcePerson.Photo.FileName;
+
+
                 try
                 {
                     _context.Update(resourcePerson);

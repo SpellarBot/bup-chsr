@@ -2,6 +2,14 @@
 
 @{
     ViewData["Title"] = "Edit";
+    List<Institute> institutes = (List<Institute>)ViewData["institutes"];
+    List<Faculty> faculties = (List<Faculty>)ViewData["faculties"];
+    List<Department> departments = (List<Department>)ViewData["departments"];
+
+    List<Specialization> specializations = (List<Specialization>)ViewData["specializations"];
+    List<SubSpecialization> subSpecializations = (List<SubSpecialization>)ViewData["subSpecializations"];
+
+    var path = $"/documents/ResourcePerson/{Model.PicFolderId}/{Model.PhotoFileName}";
 }
 
 <h1>Edit</h1>
@@ -14,24 +22,25 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
+                <img src="@path" alt="" width="120" />
+            </div>
+            <div class="custom-file">
+                <input type="file" asp-for="Photo" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div>
+            <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Institute" class="control-label"></label>
-                <input asp-for="Institute" class="form-control" />
-                <span asp-validation-for="Institute" class="text-danger"></span>
+                @Html.DropDownList("Institute", new SelectList(institutes, "ID", "Name"), optionLabel: "Select Institute")
             </div>
-            <div class="form-group">
-                <label asp-for="Faculty" class="control-label"></label>
-                <input asp-for="Faculty" class="form-control" />
-                <span asp-validation-for="Faculty" class="text-danger"></span>
+            <div class="form-group" id="fid">
+                @Html.DropDownList("Faculty", new SelectList(faculties, "ID", "Name"))
             </div>
-            <div class="form-group">
-                <label asp-for="Department" class="control-label"></label>
-                <input asp-for="Department" class="form-control" />
-                <span asp-validation-for="Department" class="text-danger"></span>
+            <div class="form-group" id="did">
+                @Html.DropDownList("Department", new SelectList(departments, "id", "Name"))
             </div>
             <div class="form-group">
                 <label asp-for="Designation" class="control-label"></label>
@@ -49,14 +58,10 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Specialization" class="control-label"></label>
-                <input asp-for="Specialization" class="form-control" />
-                <span asp-validation-for="Specialization" class="text-danger"></span>
+                @Html.DropDownList("Specialization", new SelectList(specializations, "Id", "Name"), optionLabel: "Select Specialization")
             </div>
             <div class="form-group">
-                <label asp-for="SubSpecialization" class="control-label"></label>
-                <input asp-for="SubSpecialization" class="form-control" />
-                <span asp-validation-for="SubSpecialization" class="text-danger"></span>
+                @Html.DropDownList("SubSpecialization", new SelectList(subSpecializations, "Id", "Name"))
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -69,3 +74,62 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+<script>
+$(document).ready(function(){
+    $("#Institute").change(function () {
+        console.log($(this).val());
+        var temp = $(this).val();
+        $.ajax('/Faculties/GetFaculties/' + temp)
+            .done(function (response) {
+                var listItems = "<option >Select Faculty</option>";
+                console.log(response);
+
+                for (var i = 0; i < response.length; i++) {
+                    listItems += "<option value='" + response[i].id + "'>" + response[i].name + "</option>";
+                }
+                $("#fid").html("<Select name=faculty>" + listItems + "</Select>");
+
+                $("#Department").hide();
+
+            });
+    });
+
+    $("#fid").on("change", 'select', function () {
+        console.log($(this).val());
+
+        var temp = $(this).val();
+        $.ajax('/Departments/GetDepartments/' + temp)
+            .done(function (response) {
+                var listItems = "<option >Select Department</option>";
+                console.log(response);
+
+                for (var i = 0; i < response.length; i++) {
+                    listItems += "<option value='" + response[i].id + "'>" + response[i].name + "</option>";
+                }
+                $("#Department").html("<Select name=department>" + listItems + "</Select>");
+
+                $("#Department").show();
+            });
+
+    });
+
+    $("#Specialization").change(function () {
+        console.log($(this).val());
+        var temp = $(this).val();
+        $.ajax('/SubSpecializations/GetSubSpecializations/' + temp)
+            .done(function (response) {
+                var listItems = "<option >Select Sub Specialization</option>";
+                console.log(response);
+
+                for (var i = 0; i < response.length; i++) {
+                    listItems += "<option value='" + response[i].id + "'>" + response[i].name + "</option>";
+                }
+                $("#SubSpecialization").html("<Select name=subspecialization>" + listItems + "</Select>");
+
+
+            });
+    });
+
+
+});
+</script>
