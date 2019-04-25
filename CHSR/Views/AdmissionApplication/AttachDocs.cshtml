@@ -1,0 +1,44 @@
+﻿@model CHSR.ViewModels.AttachmentViewModel
+
+@{
+    ViewData["Title"] = "AttachDocs";
+    var applicationTraceId = ViewData["applicationTraceId"];
+}
+
+<h1>AttachDocs</h1>
+
+<form asp-action="RegistrationDocs" asp-controller="AdmissionApplication" enctype="multipart/form-data">
+    <input type="hidden" value="@applicationTraceId" name="applicationTraceId"/>
+    <div class="attachDocFields">
+        <div class="attachDocFieldsGroup">
+            <div class="form-group col-md-12">
+                <select name="FileCategory">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+                </select>
+            </div>
+            <div class="input-group col-md-12">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Upload</span>
+                </div>
+                <div class="custom-file col-md-9">
+                    <input type="file" asp-for="ApplicationAttachmentFiles" class="custom-file-input" aria-describedby="inputGroupFileAddon02" accept="pdf">
+                    <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                </div>
+            </div>
+            <br />
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br/>
+<button class="btn btn-green addBtn">+ Add</button>
+
+<script>
+    $(".addBtn").click(function(){
+        $(".attachDocFieldsGroup:first").clone().appendTo(".attachDocFields");
+    });
+</script>

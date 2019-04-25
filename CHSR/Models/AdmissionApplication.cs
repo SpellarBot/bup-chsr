@@ -43,7 +43,8 @@ namespace CHSR.Models
         public string Telephone { get; set; }
         public string Mobile { get; set; }
 
-        [Required]
+        //TODO: Uncomment
+        //[Required]
         public string Email { get; set; }
         public string EmergencyContactNo { get; set; }
         public string TitleOfResearch { get; set; }
@@ -135,7 +136,6 @@ namespace CHSR.Models
 
         public List<ApplicationAttachment> ApplicationAttachments { get; set; }
 
-        [NotMapped]
-        public List<IFormFile> ApplicationAttachmentFiles { get; set; }
+        
     }
 }
