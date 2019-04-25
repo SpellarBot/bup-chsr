@@ -18,11 +18,12 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <img src="@path" alt="" width="120" />
+                <input type="hidden"name="pid" value="@Model.PicFolderId"/>
             </div>
             <div class="custom-file">
                 <input type="file" asp-for="Photo" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
