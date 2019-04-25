@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using CHSR.Models;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using CHSR.Service;
 
 namespace CHSR
 {
@@ -47,6 +48,8 @@ namespace CHSR
                 .AddEntityFrameworkStores<CHSRContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddScoped<FileUploaderService, FileUploaderService>();
 
             //services.AddDbContext<CHSRContext>(options =>
             //        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
