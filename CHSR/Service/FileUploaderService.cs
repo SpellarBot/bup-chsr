@@ -16,7 +16,7 @@ namespace CHSR.Service
         /// <param name="directoryPath"></param>
         public async void UploadFile(IFormFile file, string directoryPath)
         {
-            if (file != null || file.Length > 0)
+            if (file != null && file.Length > 0)
             {
                 var profilePicturePath = Path.Combine(directoryPath, file.FileName);
 
