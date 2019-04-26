@@ -209,6 +209,9 @@ namespace CHSR.Controllers
 
                // var temp = await _context.ResourcePerson.FindAsync(id);
 
+
+                if (pid==null) pid= Guid.NewGuid().ToString();
+
                 var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents\\ResourcePerson", pid);
 
                 if (!Directory.Exists(rootPath))
@@ -278,12 +281,14 @@ namespace CHSR.Controllers
         // POST: ResourcePersons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id,string pid)
+        public async Task<IActionResult> Delete(int id,string pid,string FileName)
         {
 
-            //var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents\\ResourcePerson", pid);
+            var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents\\ResourcePerson", pid);
 
-            //Directory.Delete(rootPath);
+            _fileUploaderService.RemoveFile(rootPath + "\\" + FileName);
+
+            Directory.Delete(rootPath);
 
             var resourcePerson = await _context.ResourcePerson.FindAsync(id);
             _context.ResourcePerson.Remove(resourcePerson);
