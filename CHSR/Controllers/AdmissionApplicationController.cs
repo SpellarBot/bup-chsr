@@ -92,10 +92,13 @@ namespace CHSR.Controllers
                 admissionApplication.IsDraft = true;
                 await _context.AdmissionApplications.AddAsync(admissionApplication);
                 await _context.SaveChangesAsync();
+
+                //TODO : send mail to applicant
+
                 return RedirectToAction("AttachDocs", new { applicationTraceId = admissionApplication.TraceId });
             }
 
-            return View(ModelState);
+            return View();
            
         }
 

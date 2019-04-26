@@ -394,6 +394,8 @@
         </tr>
     </table>
     <input type="hidden" asp-for="TraceId" />
+    <input id="IsDraft" type="hidden" name="IsDraft" value="false" asp-for="IsDraft" />
+
     <button type="submit" class="btn btn-primary">Submit</button>
     <button type="button" class="btn btn-green saveBtn">Save &amp; Continue</button>
 </form>
@@ -404,6 +406,10 @@
         var url = window.location.origin + "/" + "AdmissionApplication/Registration";
         url += "?applicationTraceId=" + existingTraceId;
         window.location.replace(url);
+    });
+    $(".saveBtn").click(function () {
+        $('#IsDraft').val(true);
+        $( "form" ).submit();               
     });
     
     $(document).on('click', 'button.deleteBtn', function () {
