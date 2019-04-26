@@ -29,8 +29,9 @@ namespace CHSR.Controllers
 
 
         [HttpGet]
-        public IActionResult Registration()
+        public IActionResult Registration(string sessionId, string applicationTraceId)
         {
+            
             var countries = new List<SelectListItem>
             {
                 new SelectListItem
@@ -47,14 +48,26 @@ namespace CHSR.Controllers
 
             ViewData["CountryList"] = countries;
 
+            if (applicationTraceId != null)
+            {
+                var admissionApplication = _context.AdmissionApplications.Where(p => p.TraceId == applicationTraceId).FirstOrDefault();
+                if (admissionApplication!=null)
+                {
+                    return View(admissionApplication);
+                }
+            }
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Registration(AdmissionApplication admissionApplication)
         {
-            var traceId = Guid.NewGuid().ToString();
-            var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents", traceId);
+            if (string.IsNullOrEmpty(admissionApplication.TraceId))
+            {
+                admissionApplication.TraceId = Guid.NewGuid().ToString();
+            }
+
+            var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents", admissionApplication.TraceId);
 
             if (!Directory.Exists(rootPath))
             {
@@ -74,15 +87,16 @@ namespace CHSR.Controllers
             //        admissionApplication.ProfilePictureId = admissionApplication.ProfilePicture.FileName;
             //    }
             //}
+            if (ModelState.IsValid|| admissionApplication.IsDraft)
+            {
+                admissionApplication.IsDraft = true;
+                await _context.AdmissionApplications.AddAsync(admissionApplication);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("AttachDocs", new { applicationTraceId = admissionApplication.TraceId });
+            }
 
-
-            admissionApplication.IsDraft = true;
-            admissionApplication.TraceId = traceId;
-            await _context.AdmissionApplications.AddAsync(admissionApplication);
-            await _context.SaveChangesAsync();
-            
-
-            return RedirectToAction("AttachDocs",new { applicationTraceId = traceId });
+            return View(ModelState);
+           
         }
 
         [HttpGet]

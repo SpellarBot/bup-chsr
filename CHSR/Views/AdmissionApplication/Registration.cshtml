@@ -7,7 +7,12 @@
 <h1>Registration</h1>
 
 <form asp-action="Registration" asp-controller="AdmissionApplication" enctype="multipart/form-data">
-   
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" id="existingTraceId" placeholder="Applied Before? Provide us your Trace Id." aria-label="Application Trace Id" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-green redirectBtn" type="button">Submit</button>
+        </div>
+    </div>
     <div class="form-group">
         <label asp-for="ProfilePicture"></label>
         <div class="input-group">
@@ -388,6 +393,25 @@
             </td>
         </tr>
     </table>
-
+    <input type="hidden" asp-for="TraceId" />
     <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="button" class="btn btn-green saveBtn">Save &amp; Continue</button>
 </form>
+
+<script>
+    $(".redirectBtn").click(function(){
+        var existingTraceId = $("#existingTraceId").val();
+        var url = window.location.origin + "/" + "AdmissionApplication/Registration";
+        url += "?applicationTraceId=" + existingTraceId;
+        window.location.replace(url);
+    });
+    
+    $(document).on('click', 'button.deleteBtn', function () {
+        // Gets the number of elements with class yourClass
+        var numItems = $('.attachDocFieldsGroup').length;
+        if (numItems > 1) {
+            $(this).closest('.attachDocFieldsGroup').remove();
+        }
+         return false;
+     });
+</script>
