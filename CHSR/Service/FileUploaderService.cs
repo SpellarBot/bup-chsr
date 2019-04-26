@@ -14,17 +14,27 @@ namespace CHSR.Service
         /// </summary>
         /// <param name="file"></param>
         /// <param name="directoryPath"></param>
+        /// <exception cref="System.NullReferenceException">Thrown when file parameter is null </exception>
         public async void UploadFile(IFormFile file, string directoryPath)
         {
-            if (file != null && file.Length > 0)
-            {
-                var profilePicturePath = Path.Combine(directoryPath, file.FileName);
+            var profilePicturePath = Path.Combine(directoryPath, file.FileName);
 
-                using (var stream = new FileStream(profilePicturePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
+            using (var stream = new FileStream(profilePicturePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+        }
+
+        public void RemoveFile(string FilePath)
+        {
+
+            
+            if (File.Exists(FilePath))
+            {
+                File.Delete(FilePath);
             }
         }
+
     }
 }

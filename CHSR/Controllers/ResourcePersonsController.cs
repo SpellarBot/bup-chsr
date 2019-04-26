@@ -138,9 +138,14 @@ namespace CHSR.Controllers
                     Directory.CreateDirectory(rootPath);
                 }
 
-                _fileUploaderService.UploadFile(resourcePerson.Photo, rootPath);
-                resourcePerson.PicFolderId = traceId;
-                resourcePerson.PhotoFileName = resourcePerson.Photo.FileName;
+                if (resourcePerson.Photo != null && resourcePerson.Photo.Length > 0)
+                {
+                    _fileUploaderService.UploadFile(resourcePerson.Photo, rootPath);
+                    resourcePerson.PicFolderId = traceId;
+                    resourcePerson.PhotoFileName = resourcePerson.Photo.FileName;
+                }
+
+                    
 
 
 
@@ -190,7 +195,7 @@ namespace CHSR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization,Photo")] ResourcePerson resourcePerson, string pid)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization,Photo")] ResourcePerson resourcePerson, string pid,string FileName)
         {
             if (id != resourcePerson.Id)
             {
@@ -211,10 +216,25 @@ namespace CHSR.Controllers
                     Directory.CreateDirectory(rootPath);
                 }
 
-                _fileUploaderService.UploadFile(resourcePerson.Photo, rootPath);
-                resourcePerson.PicFolderId = pid;
-                resourcePerson.PhotoFileName = resourcePerson.Photo.FileName;
 
+                if (resourcePerson.Photo != null && resourcePerson.Photo.Length > 0)
+                {
+                    _fileUploaderService.UploadFile(resourcePerson.Photo, rootPath);
+
+                    string temp = rootPath+"\\"+FileName;
+
+                    _fileUploaderService.RemoveFile(temp);
+
+                   
+                    resourcePerson.PhotoFileName = resourcePerson.Photo.FileName;
+                    resourcePerson.PicFolderId = pid;
+                }
+                else
+                {
+                    resourcePerson.PhotoFileName = FileName;
+                    resourcePerson.PicFolderId = pid;
+                }
+                
 
                 try
                 {
@@ -258,8 +278,13 @@ namespace CHSR.Controllers
         // POST: ResourcePersons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id,string pid)
         {
+
+            //var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents\\ResourcePerson", pid);
+
+            //Directory.Delete(rootPath);
+
             var resourcePerson = await _context.ResourcePerson.FindAsync(id);
             _context.ResourcePerson.Remove(resourcePerson);
             await _context.SaveChangesAsync();

@@ -23,7 +23,8 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <img src="@path" alt="" width="120" />
-                <input type="hidden"name="pid" value="@Model.PicFolderId"/>
+                <input type="hidden" name="pid" value="@Model.PicFolderId" />
+                <input type="hidden" name="FileName" value="@Model.PhotoFileName" />
             </div>
             <div class="custom-file">
                 <input type="file" asp-for="Photo" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">

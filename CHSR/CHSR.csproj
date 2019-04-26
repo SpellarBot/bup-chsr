@@ -17,8 +17,8 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\documents\ResourcePerson\" />
     <Folder Include="wwwroot\images\" />
-    <Folder Include="wwwroot\documents\" />
   </ItemGroup>
 
 </Project>
