@@ -1,7 +1,50 @@
-﻿
+﻿@model IEnumerable<CHSR.Models.AdmissionApplication>
+
 @{
-    ViewData["Title"] = "Index";
+
 }
 
-<h1>Index</h1>
+<!DOCTYPE html>
 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Research Title</th>
+                <th>Researcher</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i }))
+            {
+                <tr>
+                    <td>
+                        @(item.Index + 1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Data.TitleOfResearch)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Data.CandidateNameEnglish)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Data.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Data.Id">Details</a> |
+                        <a asp-action="MarkAsPaid" asp-route-id="@item.Data.Id" class="btn btn-green btn-sm">Mark As Paid</a> |
+                        <a asp-action="Shortlist" asp-route-id="@item.Data.Id" class="btn btn-green btn-sm">Shortlist</a> |
+                        <a asp-action="Comments" asp-route-id="@item.Data.Id" class="btn btn-green btn-sm">Comments</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

@@ -9,6 +9,7 @@ using CHSR.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace CHSR.Controllers
 {
@@ -22,9 +23,9 @@ namespace CHSR.Controllers
             _fileUploaderService = fileUploaderService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await _context.AdmissionApplications.ToListAsync());
         }
 
 
