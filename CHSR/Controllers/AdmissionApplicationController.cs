@@ -9,6 +9,7 @@ using CHSR.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace CHSR.Controllers
 {
@@ -22,9 +23,9 @@ namespace CHSR.Controllers
             _fileUploaderService = fileUploaderService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await _context.AdmissionApplications.ToListAsync());
         }
 
 
@@ -141,5 +142,69 @@ namespace CHSR.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var admissionApplication = await _context.AdmissionApplications.FindAsync(id);
+            if (admissionApplication == null)
+            {
+                return NotFound();
+            }
+            return View(admissionApplication);
+        }
+
+        // POST: Institutes/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(AdmissionApplication admissionApplication)
+        {
+            
+
+            var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents", admissionApplication.TraceId);
+
+            if (!Directory.Exists(rootPath))
+            {
+                Directory.CreateDirectory(rootPath);
+            }
+
+            //_fileUploaderService.UploadFile(admissionApplication.ProfilePicture, rootPath);
+            //admissionApplication.ProfilePictureId = admissionApplication.ProfilePicture.FileName;
+
+            //if (admissionApplication.ProfilePicture != null || admissionApplication.ProfilePicture.Length > 0)
+            //{
+            //    var profilePicturePath = Path.Combine(rootPath, admissionApplication.ProfilePicture.FileName);
+
+            //    using (var stream = new FileStream(profilePicturePath, FileMode.Create))
+            //    {
+            //        await admissionApplication.ProfilePicture.CopyToAsync(stream);
+            //        admissionApplication.ProfilePictureId = admissionApplication.ProfilePicture.FileName;
+            //    }
+            //}
+            if (ModelState.IsValid)
+            {
+                await _context.AdmissionApplications.AddAsync(admissionApplication);
+                await _context.SaveChangesAsync();
+
+                //TODO : send mail to applicant
+
+                return RedirectToAction("AttachDocs", new { applicationTraceId = admissionApplication.TraceId });
+            }
+
+            
+            return View(admissionApplication);
+        }
+
+        private bool admissionApplicationExists(Guid id)
+        {
+            return _context.AdmissionApplications.Any(e => e.Id == id);
+        }
+
     }
 }
