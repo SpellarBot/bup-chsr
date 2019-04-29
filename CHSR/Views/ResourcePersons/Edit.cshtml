@@ -39,10 +39,10 @@
                 @Html.DropDownList("Institute", new SelectList(institutes, "ID", "Name"), optionLabel: "Select Institute")
             </div>
             <div class="form-group" id="fid">
-                @Html.DropDownList("Faculty", new SelectList(faculties, "ID", "Name"))
+                @Html.DropDownList("Faculty", new SelectList(faculties, "ID", "Name"),optionLabel: "Select Faculty")
             </div>
             <div class="form-group" id="did">
-                @Html.DropDownList("Department", new SelectList(departments, "id", "Name"))
+                @Html.DropDownList("Department", new SelectList(departments, "id", "Name"),optionLabel: "Select Department")
             </div>
             <div class="form-group">
                 <label asp-for="Designation" class="control-label"></label>
@@ -63,7 +63,7 @@
                 @Html.DropDownList("Specialization", new SelectList(specializations, "Id", "Name"), optionLabel: "Select Specialization")
             </div>
             <div class="form-group">
-                @Html.DropDownList("SubSpecialization", new SelectList(subSpecializations, "Id", "Name"))
+                @Html.DropDownList("SubSpecialization", new SelectList(subSpecializations, "Id", "Name"),optionLabel: "Select Specialization")
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -83,16 +83,18 @@ $(document).ready(function(){
         var temp = $(this).val();
         $.ajax('/Faculties/GetFaculties/' + temp)
             .done(function (response) {
-                var listItems = "<option >Select Faculty</option>";
+
+                
+                var listItems ="<option value=''> Select Faculty</option>";
+                
                 console.log(response);
 
                 for (var i = 0; i < response.length; i++) {
                     listItems += "<option value='" + response[i].id + "'>" + response[i].name + "</option>";
                 }
                 $("#fid").html("<Select name=faculty>" + listItems + "</Select>");
-
+                $("#did").html("<Select name=Department id=Department></Select>");
                 $("#Department").hide();
-
             });
     });
 
@@ -102,7 +104,8 @@ $(document).ready(function(){
         var temp = $(this).val();
         $.ajax('/Departments/GetDepartments/' + temp)
             .done(function (response) {
-                var listItems = "<option >Select Department</option>";
+                var listItems = "<option value=''>Select Department</option>";
+                //var listItems = "";
                 console.log(response);
 
                 for (var i = 0; i < response.length; i++) {
@@ -111,6 +114,7 @@ $(document).ready(function(){
                 $("#Department").html("<Select name=department>" + listItems + "</Select>");
 
                 $("#Department").show();
+                
             });
 
     });
@@ -120,7 +124,8 @@ $(document).ready(function(){
         var temp = $(this).val();
         $.ajax('/SubSpecializations/GetSubSpecializations/' + temp)
             .done(function (response) {
-                var listItems = "<option >Select Sub Specialization</option>";
+                var listItems = "<option value='' >Select Sub Specialization</option>";
+                //var listItems = "";
                 console.log(response);
 
                 for (var i = 0; i < response.length; i++) {

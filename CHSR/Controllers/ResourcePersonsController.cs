@@ -125,7 +125,7 @@ namespace CHSR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization,Photo")] ResourcePerson resourcePerson)
+        public async Task<IActionResult> Create([Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization,Photo,ResearchInterest")] ResourcePerson resourcePerson)
         {
             if (ModelState.IsValid)
             {
@@ -145,13 +145,7 @@ namespace CHSR.Controllers
                     resourcePerson.PhotoFileName = resourcePerson.Photo.FileName;
                 }
 
-                    
-
-
-
-
-
-
+       
                 _context.Add(resourcePerson);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -209,6 +203,19 @@ namespace CHSR.Controllers
 
                // var temp = await _context.ResourcePerson.FindAsync(id);
 
+                //if(resourcePerson.Institute==null)
+                //{
+                //    resourcePerson.Faculty = null;
+                //    resourcePerson.Department = null;
+                //}
+                //if (resourcePerson.Faculty == null)
+                //{
+                //    resourcePerson.Department = null;
+                //}
+                //if(resourcePerson.Specialization==null)
+                //{
+                //    resourcePerson.SubSpecialization = null;
+                //}
 
                 if (pid==null) pid= Guid.NewGuid().ToString();
 
@@ -283,12 +290,15 @@ namespace CHSR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id,string pid,string FileName)
         {
+            if (pid != null)
+            {
+                var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents\\ResourcePerson", pid);
 
-            var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents\\ResourcePerson", pid);
+               if(FileName!=null) _fileUploaderService.RemoveFile(rootPath + "\\" + FileName);
 
-            _fileUploaderService.RemoveFile(rootPath + "\\" + FileName);
+                Directory.Delete(rootPath);
+            }
 
-            Directory.Delete(rootPath);
 
             var resourcePerson = await _context.ResourcePerson.FindAsync(id);
             _context.ResourcePerson.Remove(resourcePerson);

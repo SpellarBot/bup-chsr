@@ -25,5 +25,9 @@ namespace CHSR.Models
         public string Specialization { get; set; }
         public string SubSpecialization { get; set; }
         public string PhotoFileName { get; internal set; }
+
+        
+        public List<string> ResearchInterest { get; set; }
+
     }
 }
