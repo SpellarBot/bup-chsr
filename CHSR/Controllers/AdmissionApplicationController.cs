@@ -107,7 +107,23 @@ namespace CHSR.Controllers
         public IActionResult AttachDocs(string applicationTraceId)
         {
             ViewData["applicationTraceId"] = applicationTraceId;
+
+            DirectoryInfo dirInfo = new DirectoryInfo(@"wwwroot\\documents\\"+applicationTraceId);
+            List<FileInfo> files = dirInfo.GetFiles().ToList();
+
+            //List<dynamic> data = new List<dynamic>();
+            List<string> data = new List<string>();
+            foreach(var item in files)
+            {
+                data.Add(item.Name);
+            }
+
+            ViewData["Files"] = data;
+            
+            //pass the data trough the "View" method
             return View();
+
+            //return View();
         }
 
         [HttpPost]
@@ -189,7 +205,8 @@ namespace CHSR.Controllers
             //}
             if (ModelState.IsValid)
             {
-                await _context.AdmissionApplications.AddAsync(admissionApplication);
+                
+                _context.Update(admissionApplication);
                 await _context.SaveChangesAsync();
 
                 //TODO : send mail to applicant

@@ -1,11 +1,27 @@
-﻿@model CHSR.ViewModels.AttachmentViewModel
+﻿
+@model CHSR.ViewModels.AttachmentViewModel
+
 
 @{
     ViewData["Title"] = "AttachDocs";
     var applicationTraceId = ViewData["applicationTraceId"];
+
+    var files = ViewData["Files"] as List<string>;
 }
 
 <h1>AttachDocs</h1>
+
+<ul>
+    @foreach (string fileName in files)
+    {
+        <li style="margin-bottom : 5px;" class="row myFileRow">
+            <span class="myFileName">@fileName</span>
+            <button type="button" class="close btn btn-sm col-md-1 detachBtn" aria-label="Close" style="background: red; color: white; height: 25px; margin-left: 5px;">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </li>
+    }
+</ul>
 
 <form asp-action="RegistrationDocs" asp-controller="AdmissionApplication" enctype="multipart/form-data">
     <input type="hidden" value="@applicationTraceId" name="applicationTraceId"/>
