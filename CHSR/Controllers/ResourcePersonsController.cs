@@ -125,7 +125,7 @@ namespace CHSR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization,Photo,ResearchInterest")] ResourcePerson resourcePerson)
+        public async Task<IActionResult> Create([Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization,Photo")] ResourcePerson resourcePerson)
         {
             if (ModelState.IsValid)
             {

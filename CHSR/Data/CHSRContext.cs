@@ -23,6 +23,7 @@ namespace CHSR.Models
         public DbSet<Session> Sessions { get; set; }
         public DbSet<AdmissionApplication> AdmissionApplications { get; set; }
         public DbSet<ApplicationAttachment> ApplicationAttachments { get; set; }
+        public DbSet<ResearchInterest> ResearchInterests { get; set; }  
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,10 +39,10 @@ namespace CHSR.Models
                .WithOne(e => e.Faculty)
                .IsRequired();
 
-        modelBuilder.Entity<Specialization>()
-       .HasMany(c => c.SubSpecializations)
-       .WithOne(e => e.Specialization)
-       .IsRequired();
+   
+
+
+
 
             modelBuilder.Entity<Institute>().HasData(new Institute { ID = 1, Name = "AIUB", Location = "KURIL" });
         }
