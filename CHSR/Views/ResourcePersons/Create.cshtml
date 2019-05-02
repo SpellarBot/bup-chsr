@@ -4,6 +4,9 @@
     ViewData["Title"] = "Create";
     List<Institute> institutes = (List<Institute>)ViewData["institutes"];
     List<Specialization> specializations = (List<Specialization>)ViewData["specializations"];
+    List<ResearchInterest> researchInterests = (List<ResearchInterest>)ViewData["researchInterests"];
+
+    var interests= researchInterests.Select(x => new { label = x.AreaName, value = x.Id });
 }
 
 <h1>Create</h1>
@@ -62,19 +65,23 @@
 
             </div>
 
-            @*<div class="form-group">
-                <label asp-for="ResearchInterest" class="control-label"></label>
+            <div class="form-group">
+                <label asp-for="ResearchAreas" class="control-label"></label>
                 <input id="rinput" class="form-control" />
-                <span asp-validation-for="ResearchInterest" class="text-danger"></span>
+                <span asp-validation-for="ResearchAreas" class="text-danger"></span>
                 <button type="button" id="rid">+</button>
             </div>
             <div class="form-group" id="result">
-                
-            </div>*@
+
+                @*<div id="remove">X</div>*@
+
+            </div>
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+
+            @*@Html.Hidden("ResearchInterests", researchInterests.Select(x=>x.AreaName).Aggregate((x,y)=>x+","+y), new { id = "researchInterests" })*@
         </form>
     </div>
 </div>
@@ -83,70 +90,99 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script>
-$(document).ready(function(){
-  $("#Institute").change(function(){
-      console.log($(this).val());
-      var temp = $(this).val();
-      		$.ajax('/Faculties/GetFaculties/'+temp)
-                    .done(function (response) {
-                var listItems= "<option value=''>Select Faculty</option>";
-                console.log(response);
 
-                for (var i = 0; i < response.length; i++){
-                    listItems+= "<option value='" + response[i].id + "'>" + response[i].name + "</option>";
+
+    $(document).ready(function () {
+        $("#Institute").change(function () {
+            console.log($(this).val());
+            var temp = $(this).val();
+            $.ajax('/Faculties/GetFaculties/' + temp)
+                .done(function (response) {
+                    var listItems = "<option value=''>Select Faculty</option>";
+                    console.log(response);
+
+                    for (var i = 0; i < response.length; i++) {
+                        listItems += "<option value='" + response[i].id + "'>" + response[i].name + "</option>";
                     }
-                $("#FacultyID").html("<Select name=faculty>"+listItems+"</Select>");
+                    $("#FacultyID").html("<Select name=faculty>" + listItems + "</Select>");
 
-                        $("#DepartmentID").hide();
+                    $("#DepartmentID").hide();
 
-			});
-  });
+                });
+        });
 
-    $("#FacultyID").on("change",'select',function () {
-        console.log($(this).val());
+        $("#FacultyID").on("change", 'select', function () {
+            console.log($(this).val());
 
             var temp = $(this).val();
-      		$.ajax('/Departments/GetDepartments/'+temp)
-                    .done(function (response) {
-                var listItems= "<option value='' >Select Department</option>";
-                console.log(response);
+            $.ajax('/Departments/GetDepartments/' + temp)
+                .done(function (response) {
+                    var listItems = "<option value='' >Select Department</option>";
+                    console.log(response);
 
-                for (var i = 0; i < response.length; i++){
-                    listItems+= "<option value='" + response[i].id + "'>" + response[i].name + "</option>";
+                    for (var i = 0; i < response.length; i++) {
+                        listItems += "<option value='" + response[i].id + "'>" + response[i].name + "</option>";
                     }
-                $("#DepartmentID").html("<Select name=department>"+listItems+"</Select>");
-                
-                $("#DepartmentID").show();
-			});
+                    $("#DepartmentID").html("<Select name=department>" + listItems + "</Select>");
+
+                    $("#DepartmentID").show();
+                });
+
+        });
+
+        $("#Specialization").change(function () {
+            console.log($(this).val());
+            var temp = $(this).val();
+            $.ajax('/SubSpecializations/GetSubSpecializations/' + temp)
+                .done(function (response) {
+                    var listItems = "<option value=''>Select Sub Specialization</option>";
+                    console.log(response);
+
+                    for (var i = 0; i < response.length; i++) {
+                        listItems += "<option value='" + response[i].id + "'>" + response[i].name + "</option>";
+                    }
+                    $("#SubID").html("<Select name=subspecialization>" + listItems + "</Select>");
+
+
+                });
+        });
+
+        $("#rid").click(function () {
+            console.log($(this).val());
+            var temp = $("#rinput").val();
+            console.log(temp);
+            $("#result").append("<p>" + temp + "<input type='hidden' name='ResearchAreas' value='" + temp + "' /><button tupe='button'>X</button></p>");
+
+        });
+
+
+        $(function () {
+
+
+
+            var $local_source =@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(interests));
+
+            //ToDO: object to jquery data
+            //on select insert in hidden field
+
+            $("#rinput").autocomplete({
+                source: $local_source,
+                select: function (event, ui) {
+                    console.log(ui.item.label);
+                    console.log(ui.item.value);
+                    $("#result").append("<p>" + ui.item.label + "<input type='hidden' name='ResearchAreas' value='" + ui.item.value + "' /><button type='button'>X</button></p>");
+                }
+            });
+        });
+
+        $("#result").on('click', 'button', function () {
+
+            $(this).parent().remove();
+        });
+
 
     });
-
-      $("#Specialization").change(function(){
-      console.log($(this).val());
-      var temp = $(this).val();
-      		$.ajax('/SubSpecializations/GetSubSpecializations/'+temp)
-                    .done(function (response) {
-                var listItems= "<option value=''>Select Sub Specialization</option>";
-                console.log(response);
-
-                for (var i = 0; i < response.length; i++){
-                    listItems+= "<option value='" + response[i].id + "'>" + response[i].name + "</option>";
-                        }
-                        $("#SubID").html("<Select name=subspecialization>" + listItems + "</Select>");
-                
-
-			});
-      });
-
-    $("#rid").click(function(){
-      console.log($(this).val());
-      var temp = $("#rinput").val();
-        console.log(temp);
-        $("#result").append("<p>" + temp + "<input type='hidden' name='ResearchInterest' value='" + temp + "' /></p>");
-
-  });
-
-
-} );
 </script>

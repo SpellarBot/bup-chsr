@@ -9,6 +9,6 @@ namespace CHSR.Models
     {
         public int Id { get; set; }
         public string AreaName { get; set; }
-        public ResourcePerson ResourcePerson { get; set; }
+        public ICollection<ResearchArea> ResearchAreas { get; set; }
     }
 }

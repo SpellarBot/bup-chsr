@@ -114,9 +114,11 @@ namespace CHSR.Controllers
             //var institutes = await _context.Institutes.ToListAsync();
             List<Institute> institutes = _context.Institutes.ToListAsync().Result;
             List<Specialization> specializations = _context.Specializations.ToListAsync().Result;
+            List<ResearchInterest> researchInterests = _context.ResearchInterests.ToListAsync().Result;
 
             ViewData["institutes"] = institutes;
             ViewData["specializations"] = specializations;
+            ViewData["researchInterests"] = researchInterests;
             return View();
         }
 
@@ -125,7 +127,7 @@ namespace CHSR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization,Photo")] ResourcePerson resourcePerson)
+        public async Task<IActionResult> Create([Bind("Id,Name,Institute,Faculty,Department,Designation,Phone,Email,Specialization,SubSpecialization,Photo,ResearchAreas")] ResourcePerson resourcePerson, ICollection<string> ResearchAreas)
         {
             if (ModelState.IsValid)
             {
@@ -145,6 +147,18 @@ namespace CHSR.Controllers
                     resourcePerson.PhotoFileName = resourcePerson.Photo.FileName;
                 }
 
+                foreach (string item in ResearchAreas)
+                {
+                    int value = 0;
+                    if (int.TryParse(item, out value))
+                    {
+                        resourcePerson.ResearchAreas.Add(new ResearchArea { ResearchInterestId = value });
+                    }
+                    else
+                    {
+                        resourcePerson.ResearchAreas.Add(new ResearchArea { ResearchInterest = new ResearchInterest { AreaName = item } });
+                    }
+                }
        
                 _context.Add(resourcePerson);
                 await _context.SaveChangesAsync();

@@ -9,6 +9,11 @@ namespace CHSR.Models
 {
     public class ResourcePerson
     {
+        public ResourcePerson()
+        {
+            ResearchAreas = new List<ResearchArea>();
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Institute { get; set; }
@@ -26,9 +31,9 @@ namespace CHSR.Models
         public string SubSpecialization { get; set; }
         public string PhotoFileName { get; internal set; }
 
-        public ICollection<ResearchInterest> ResearchInterests { get; set; }
-        
-       // public List<string> ResearchInterest { get; set; }
+        public ICollection<ResearchArea> ResearchAreas { get; set; }
+
+        // public List<string> ResearchInterest { get; set; }
 
     }
 }
