@@ -77,8 +77,17 @@ namespace CHSR.Controllers
                 return NotFound();
             }
 
+
+
             var resourcePerson = await _context.ResourcePerson
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+
+            List<ResearchInterest> researchInterests = _context.ResearchAreas.Where(m => m.ResourcePersonId == resourcePerson.Id).Select(x => x.ResearchInterest).ToList();
+
+            ViewData["researchInterests"] = researchInterests;
+
+
 
             var institute = await _context.Institutes
                 .FirstOrDefaultAsync(m => m.ID.ToString() == resourcePerson.Institute);
@@ -177,11 +186,11 @@ namespace CHSR.Controllers
 
             var resourcePerson = await _context.ResourcePerson.FindAsync(id);
 
-            List<Institute> institutes = _context.Institutes.ToListAsync().Result;
+            List<Institute> institutes = await _context.Institutes.ToListAsync();
             List<Faculty> faculties = await _context.Faculties.Where(x => x.Institute.ID.ToString() == resourcePerson.Institute).ToListAsync();
             List<Department> departments = await _context.Departments.Where(x => x.Faculty.ID.ToString() == resourcePerson.Faculty).ToListAsync();
 
-            List<Specialization> specializations = _context.Specializations.ToListAsync().Result;
+            List<Specialization> specializations = await _context.Specializations.ToListAsync();
             List<SubSpecialization> subSpecializations = await _context.SubSpecializations.Where(x => x.Specialization.Id.ToString() == resourcePerson.Specialization).ToListAsync();
 
             ViewData["institutes"] = institutes;
