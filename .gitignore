@@ -318,3 +318,5 @@ ASALocalRun/
 
 # MSBuild Binary and Structured Log
 *.binlog
+/CHSR/wwwroot/documents/9c15f2f4-90fb-4870-8dd9-3d6ffabda87c
+/CHSR.Web/package-lock.json

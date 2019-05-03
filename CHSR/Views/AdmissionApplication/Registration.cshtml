@@ -4,6 +4,8 @@
     ViewData["Title"] = "Registration";
 }
 
+    <button class="btn btn-pill btn-block btn-success active" type="button" aria-pressed="true">Success</button>
+
 <h1>Registration</h1>
 
 <form asp-action="Registration" asp-controller="AdmissionApplication" enctype="multipart/form-data">
@@ -401,7 +403,7 @@
 </form>
 
 <script>
-    $(".redirectBtn").click(function(){
+    $(".redirectBtn").click(function () {
         var existingTraceId = $("#existingTraceId").val();
         var url = window.location.origin + "/" + "AdmissionApplication/Registration";
         url += "?applicationTraceId=" + existingTraceId;
@@ -409,15 +411,15 @@
     });
     $(".saveBtn").click(function () {
         $('#IsDraft').val(true);
-        $( "form" ).submit();               
+        $("form").submit();
     });
-    
+
     $(document).on('click', 'button.deleteBtn', function () {
         // Gets the number of elements with class yourClass
         var numItems = $('.attachDocFieldsGroup').length;
         if (numItems > 1) {
             $(this).closest('.attachDocFieldsGroup').remove();
         }
-         return false;
-     });
+        return false;
+    });
 </script>

@@ -1,14 +1,14 @@
-﻿{
+{
   "name": "@chsr/netmvc",
   "version": "1.0.0",
   "description": "BUP CHSR",
   "main": "index.html",
   "dependencies": {
     "bootstrap": "4.0.0",
-    "chart.js": "2.7.1",
+    "chart.js": "^2.8.0",
     "flag-icon-css": "3.0.0",
     "font-awesome": "4.7.0",
-    "jquery": "3.2.1",
+    "jquery": "^3.4.1",
     "jquery-validation": "^1.17.0",
     "jquery-validation-unobtrusive": "^3.2.6",
     "pace-progress": "1.0.2",
