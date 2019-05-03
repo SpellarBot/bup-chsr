@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHSR", "CHSR\CHSR.csproj", "{773A1B70-5C3C-4E2A-BDF2-ED75D2F8E953}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CHSR", "CHSR\CHSR.csproj", "{773A1B70-5C3C-4E2A-BDF2-ED75D2F8E953}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHSR.Repository", "CHSR.Repository\CHSR.Repository.csproj", "{016586E0-C29D-4671-AB69-06534A883124}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{773A1B70-5C3C-4E2A-BDF2-ED75D2F8E953}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{773A1B70-5C3C-4E2A-BDF2-ED75D2F8E953}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{773A1B70-5C3C-4E2A-BDF2-ED75D2F8E953}.Release|Any CPU.Build.0 = Release|Any CPU
+		{016586E0-C29D-4671-AB69-06534A883124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{016586E0-C29D-4671-AB69-06534A883124}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{016586E0-C29D-4671-AB69-06534A883124}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{016586E0-C29D-4671-AB69-06534A883124}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
