@@ -16,11 +16,11 @@ namespace CHSR.Controllers
     public class AdmissionApplicationController : Controller
     {
         private readonly CHSRContext _context;
-        private readonly FileUploaderService _fileUploaderService;
-        public AdmissionApplicationController(CHSRContext context, FileUploaderService fileUploaderService)
+        private readonly FileAddRemoveService _fileService;
+        public AdmissionApplicationController(CHSRContext context, FileAddRemoveService fileService)
         {
             _context = context;
-            _fileUploaderService = fileUploaderService;
+            _fileService = fileService;
         }
 
         public async Task<IActionResult> Index()
@@ -143,7 +143,7 @@ namespace CHSR.Controllers
             int i = 0;
             foreach (var attachment in attachmentViewModel.ApplicationAttachmentFiles)
             {
-                _fileUploaderService.UploadFile(attachment, rootPath);
+                _fileService.UploadFile(attachment, rootPath);
                 admissionApplication.ApplicationAttachments.Add(new ApplicationAttachment { FileName = attachment.FileName, FileCategory = fileCategory[i], AdmissionApplication = admissionApplication });
                 i++;
             }

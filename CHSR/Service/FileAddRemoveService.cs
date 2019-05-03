@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CHSR.Service
 {
-    public class FileUploaderService
+    public class FileAddRemoveService
     {
         /// <summary>
         /// Upload file to specified folder
@@ -28,8 +24,6 @@ namespace CHSR.Service
 
         public void RemoveFile(string FilePath)
         {
-
-            
             if (File.Exists(FilePath))
             {
                 File.Delete(FilePath);

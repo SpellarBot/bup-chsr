@@ -1,24 +1,24 @@
-﻿using System;
+﻿using CHSR.Models;
+using CHSR.Service;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using CHSR.Models;
-using System.IO;
-using CHSR.Service;
+
 namespace CHSR.Controllers
 {
     public class ResourcePersonsController : Controller
     {
         private readonly CHSRContext _context;
-        private readonly FileUploaderService _fileUploaderService;
+        private readonly FileAddRemoveService _fileService;
 
-        public ResourcePersonsController(CHSRContext context, FileUploaderService fileUploaderService)
+        public ResourcePersonsController(CHSRContext context, FileAddRemoveService fileUpService)
         {
             _context = context;
-            _fileUploaderService = fileUploaderService;
+            _fileService = fileUpService;
         }
 
         // GET: ResourcePersons
@@ -26,7 +26,7 @@ namespace CHSR.Controllers
         {
             List<Task> tasks = new List<Task>();
             Task<List<ResourcePerson>> resourcePerson = _context.ResourcePerson.ToListAsync();
-            Task<List<Institute>> institutes= _context.Institutes.ToListAsync();
+            Task<List<Institute>> institutes = _context.Institutes.ToListAsync();
             Task<List<Faculty>> faculties = _context.Faculties.ToListAsync();
             Task<List<Department>> departments = _context.Departments.ToListAsync();
             Task<List<Specialization>> specializations = _context.Specializations.ToListAsync();
@@ -62,9 +62,7 @@ namespace CHSR.Controllers
                 var subSpecialization = subSpecializations.Result.Find(x => x.Id.ToString() == rp.SubSpecialization);
                 if (subSpecialization != null)
                     rp.SubSpecialization = subSpecialization.Name;
-
             }
-
 
             return View(resourcePerson.Result);
         }
@@ -151,7 +149,7 @@ namespace CHSR.Controllers
 
                 if (resourcePerson.Photo != null && resourcePerson.Photo.Length > 0)
                 {
-                    _fileUploaderService.UploadFile(resourcePerson.Photo, rootPath);
+                    _fileService.UploadFile(resourcePerson.Photo, rootPath);
                     resourcePerson.PicFolderId = traceId;
                     resourcePerson.PhotoFileName = resourcePerson.Photo.FileName;
                 }
@@ -252,11 +250,11 @@ namespace CHSR.Controllers
 
                 if (resourcePerson.Photo != null && resourcePerson.Photo.Length > 0)
                 {
-                    _fileUploaderService.UploadFile(resourcePerson.Photo, rootPath);
+                    _fileService.UploadFile(resourcePerson.Photo, rootPath);
 
                     string temp = rootPath+"\\"+FileName;
 
-                    _fileUploaderService.RemoveFile(temp);
+                    _fileService.RemoveFile(temp);
 
                    
                     resourcePerson.PhotoFileName = resourcePerson.Photo.FileName;
@@ -317,7 +315,7 @@ namespace CHSR.Controllers
             {
                 var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\documents\\ResourcePerson", pid);
 
-               if(FileName!=null) _fileUploaderService.RemoveFile(rootPath + "\\" + FileName);
+               if(FileName!=null) _fileService.RemoveFile(rootPath + "\\" + FileName);
 
                 Directory.Delete(rootPath);
             }

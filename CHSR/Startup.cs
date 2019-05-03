@@ -49,7 +49,7 @@ namespace CHSR
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddScoped<FileUploaderService, FileUploaderService>();
+            services.AddScoped<FileAddRemoveService, FileAddRemoveService>();
 
             //services.AddDbContext<CHSRContext>(options =>
             //        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
